@@ -2,7 +2,6 @@
 import { type PageDefinition } from "../site-map";
 import { ProviderCatalog, ProviderDirectory } from "./provider-catalog";
 import { CasinoLobby } from "./casino-lobby";
-import { SportsScreen } from "./sports-screen";
 import {
   AffiliateScreen,
   CryptoScreen,
@@ -27,8 +26,6 @@ export function FrontendPage({
       return <ProviderCatalog key={pageKey} title={definition.title} category={["search", "all-games"].includes(pageKey) ? "" : pageKey} />;
     case "providers":
       return <ProviderDirectory />;
-    case "sports":
-      return <SportsScreen />;
     case "promotions":
       return <PromotionsScreen />;
     case "promotion":

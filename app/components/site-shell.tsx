@@ -62,7 +62,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
     setCookies(false);
     setPreferences(false);
   };
-  if (pathname.startsWith("/play/")) {
+  if (pathname === "/sports" || pathname.startsWith("/play/")) {
     return <SiteContext.Provider value={{ navigate }}>
       <GameShell returnHref={gameReturnHref.current}>{children}</GameShell>
     </SiteContext.Provider>;
@@ -112,8 +112,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           Casino
         </Link>
         <Link
-          href="/sportsbook"
-          className={pathname === "/sportsbook" ? "selected" : ""}
+          href="/sports"
+          prefetch={false}
+          className={pathname === "/sports" ? "selected" : ""}
         >
           <Trophy />
           Sports

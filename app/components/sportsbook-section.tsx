@@ -75,7 +75,7 @@ export function SportsbookSection() {
         <div className={styles.copy}>
           <h2 id="sportsbook-banner-title">Sportsbook</h2>
           <p>Football, tennis, basketball and 30+ more.</p>
-          <Link className={styles.action} href="/sportsbook">
+          <Link className={styles.action} href="/sports" prefetch={false}>
             View Sports
           </Link>
         </div>
@@ -105,7 +105,7 @@ export function SportsbookSection() {
             Sportsbook
           </h2>
           <div className={styles.controls}>
-            <Link href="/sportsbook" aria-label="All sports">
+            <Link href="/sports" prefetch={false} aria-label="All sports">
               All
             </Link>
             <button
@@ -157,11 +157,8 @@ export function SportsbookSection() {
             <SwiperSlide className={styles.slide} key={sport.name}>
               <Link
                 className={styles.card}
-                href={
-                  sport.sport
-                    ? `/sportsbook?sport=${sport.sport}`
-                    : "/sportsbook"
-                }
+                href="/sports"
+                prefetch={false}
                 aria-label={sport.name}
                 draggable={false}
               >

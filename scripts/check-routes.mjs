@@ -22,9 +22,13 @@ dynamicRoutes.push(...catalog.providers.map((provider) => `/providers/${encodeUR
 routes.push(...dynamicRoutes);
 const protectedRoutes = ['', '/profile', '/wallet', '/bets', '/deposit', '/withdraw', '/transactions', '/bonuses', '/favorites', '/security', '/verification', '/responsible-gaming'].map((section) => '/account' + section);
 protectedRoutes.push('/play/00000000-0000-4000-8000-000000000001');
+protectedRoutes.push('/sports');
 protectedRoutes.push(...catalog.games.slice(0, 1).map((game) => `/play/${game.uuid}`));
 const queue = [...routes, ...protectedRoutes];
 const failures = [];
+const legacySports = await fetch(new URL('/sportsbook', origin), { redirect: 'manual' });
+if (legacySports.status !== 307 || new URL(legacySports.headers.get('location') || '/', origin).pathname !== '/sports')
+  failures.push('/sportsbook: expected a redirect to /sports');
 const linkedPaths = new Set();
 let checked = 0;
 async function worker() {

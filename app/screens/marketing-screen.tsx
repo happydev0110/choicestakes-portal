@@ -55,8 +55,8 @@ export function PromotionsScreen() {
         <div className="page-empty">
           <Trophy size={40} />
           <h2>Sports offers are coming soon</h2>
-          <p>Browse the sportsbook preview while we prepare this collection.</p>
-          <Link href="/sportsbook" className="secondary">
+          <p>Explore Betby Sports while we prepare this collection.</p>
+          <Link href="/sports" prefetch={false} className="secondary">
             Explore sports
           </Link>
         </div>

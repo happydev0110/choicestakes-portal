@@ -38,6 +38,17 @@ Clicking any provider game card opens `/play/{uuid}` directly, with prefetch dis
 
 Add sandbox credentials only to the backend `.env`, then run `npm run games:check` and `npm run games:sync` there to test access and import games without launching anything. For actual gameplay, configure the public HTTPS callback in both `.env` and the provider back office, set `APIMATIC_ENABLED=true`, and restart the backend. No provider secret belongs in the frontend. Without credentials, the collection displays a coming-soon state. Actual vendor gameplay cannot be verified until callback setup is complete.
 
+Sports navigation opens `/sports`, which embeds Betby using the same authenticated
+game loader and launch API as `/play/{uuid}`. The URL remains `/sports`, including
+after login or registration. `SPORTSBOOK_GAME_ID` is an optional server-side portal
+setting; it defaults to `044708be-61d4-5516-91dc-b3829c296294`. The configured game
+must exist and be available in the backend catalog, with sandbox launches enabled.
+Existing `/sportsbook` URLs redirect to `/sports`. Homepage sport cards open the
+Betby lobby; choose the sport inside Betby rather than using the old preview filters.
+Fullscreen, Deposit and Close use the existing game shell; Close returns to the last
+lobby or Casino, never back to `/sports`. No launch runs during server rendering or
+link prefetching. Actual Betby availability still depends on API-MATIC.
+
 ## Included
 
 - Shared provider catalog with search, provider filters, category links, and complete server-side pagination.
@@ -49,7 +60,7 @@ Add sandbox credentials only to the backend `.env`, then run `npm run games:chec
 - Dedicated game categories with search, provider filtering, alphabetical sorting, and server-side pagination
 - Dynamic provider directory with counts from MySQL and `/providers/{provider}` routes.
 - Dynamic `/games/{uuid}` detail pages with browser-saved favorites and authenticated sandbox launch links.
-- Sportsbook with sport/live filters, fictional fixtures, selectable odds, and a calculated preview bet slip
+- Betby Sports at `/sports`, using the shared authenticated provider player and sandbox wallet
 - Promotion filters and three offer detail pages, loyalty tier selector and XP explorer, affiliate and referral pages, and a crypto quote preview
 - FAQ search and accordions, validated contact/complaint forms, and eight draft policy pages
 - MySQL-backed login and registration, session persistence, logout, and protected account pages; password recovery placeholder
@@ -64,7 +75,7 @@ Add sandbox credentials only to the backend `.env`, then run `npm run games:chec
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Lobby & catalogs   | `/`, `/casino`, `/new-games`, `/slots`, `/live`, `/crash-instant`, `/table-cards`, `/lotto-scratch`, `/roulette`, `/poker`, `/search`                                                                                                      |
 | Providers & games  | `/provider-games`, `/play/{uuid}`, `/providers`, `/providers/{provider}`, `/games/{uuid}` |
-| Sports             | `/sportsbook`                                                                                                                                                                                                                              |
+| Sports             | `/sports` (Betby); `/sportsbook` redirects to `/sports` |
 | Promotions         | `/promotions`, `/promotions/first-deposit`, `/promotions/second-deposit`, `/promotions/third-deposit`                                                                                                                                      |
 | Rewards & partners | `/loyalty-tiers`, `/affiliates`, `/refer-a-friend`                                                                                                                                                                                         |
 | Crypto             | `/buy-crypto`                                                                                                                                                                                                                              |
@@ -83,7 +94,7 @@ npm run build
 npm run check:routes -- http://198.18.1.255:3000
 ```
 
-The route check reads the production build manifest and checks every generated page against a running server, verifies rendered internal link destinations, checks all eleven account routes redirect unauthenticated visitors, and checks unknown-route 404 responses. Build before running it. Browser checks cover catalog filters, favorites, promotion navigation, support forms, crypto quotes, loyalty tiers, deposit review, sportsbook calculations, mobile navigation, and the existing carousel.
+The route check reads the production build manifest and checks every generated page against a running server, verifies rendered internal link destinations, checks account/game routes and `/sports` redirect unauthenticated visitors, checks the legacy `/sportsbook` redirect, and checks unknown-route 404 responses. Build before running it. Browser checks cover catalog filters, favorites, promotion navigation, support forms, crypto quotes, loyalty tiers, deposit review, Betby navigation, mobile navigation, and the existing carousel.
 
 ## Scope
 

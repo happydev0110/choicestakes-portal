@@ -64,7 +64,7 @@ const faqs = [
     category: "General",
     question: "Are the wins, offers, and sports scores real?",
     answer:
-      "No. All activity, promotions, fixtures, odds, and balances are sample content used to demonstrate the interface.",
+      "Wins and offers shown in promotional previews are sample content. Sports opens Betby, which supplies the events and odds in its interface. Current provider gameplay uses sandbox test credits.",
   },
   {
     category: "General",
@@ -418,19 +418,19 @@ const policies: Record<
   },
   "betting-rules": {
     intro:
-      "The sportsbook is an interactive preview using fictional fixtures and fixed sample odds.",
+      "Sports opens the Betby sportsbook. Current gameplay uses sandbox test credits.",
     sections: [
       [
         "Selections and slips",
-        "Selecting odds adds an item to a local preview slip. Selecting another outcome for the same event replaces the previous selection. No wager is placed.",
+        "Use the selections and bet slip inside Betby. Check the event, market, odds and stake before confirming a sandbox bet.",
       ],
       [
         "Potential returns",
-        "The preview multiplies the sample odds by the entered stake to illustrate a possible return. This figure is not a payout promise or a live market quote.",
+        "The sportsbook displays the odds and potential return for your selections. Sandbox credits cannot be deposited or withdrawn as real money.",
       ],
       [
         "Settlement and cancellations",
-        "No results feed, bet acceptance, cash-out, settlement, voiding, or cancellation service exists in this demo. A production sportsbook must publish its market and settlement rules.",
+        "Consult the rules and bet status shown inside Betby for the selected market. Contact support with the event and bet reference if a sandbox result needs review.",
       ],
     ],
   },

@@ -88,10 +88,12 @@ export function ProviderGamePlayer({
   game,
   playerId,
   launchEnabled,
+  playPath = `/play/${game.uuid}`,
 }: {
   game: ProviderGame;
   playerId: string;
   launchEnabled: boolean;
+  playPath?: string;
 }) {
   const router = useRouter();
   const session = usePlayer();
@@ -112,9 +114,9 @@ export function ProviderGamePlayer({
     if (!mustSignIn || redirecting.current) return;
     redirecting.current = true;
     if (unauthorized) void session.refresh();
-    router.replace("/login?next=" + encodeURIComponent("/play/" + game.uuid));
+    router.replace("/login?next=" + encodeURIComponent(playPath));
     router.refresh();
-  }, [mustSignIn, unauthorized, session.refresh, router, game.uuid]);
+  }, [mustSignIn, unauthorized, session.refresh, router, playPath]);
   return (
     <section className={styles.player} aria-label={`${game.name} player`}>
       <h1 className="sr-only">{game.name}</h1>

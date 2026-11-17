@@ -95,7 +95,7 @@ export function SiteFooter({
           <div className={styles.sportsColumn}>
             <FooterGroup
               title="Sportsbook"
-              links={[["Sportsbook", "/sportsbook"]]}
+              links={[["Sportsbook", "/sports"]]}
             />
             <FooterGroup
               className={styles.mobileGroup}
@@ -179,7 +179,7 @@ export function SiteFooter({
         </div>
         <p className={styles.disclaimer}>
           Game listings are supplied by our provider.
-          Sports odds, offers, and unconnected account features remain sample content.
+          Offers and unconnected account features remain sample content. Sports opens the connected Betby sandbox.
           Payments and live support are not connected.
         </p>
         <p className={styles.copyright}>© 2026 · Choicestakes</p>

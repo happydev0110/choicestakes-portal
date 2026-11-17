@@ -4,7 +4,6 @@ export type PageKind =
   | "casino"
   | "catalog"
   | "providers"
-  | "sports"
   | "promotions"
   | "promotion"
   | "loyalty"
@@ -111,7 +110,6 @@ export const pageDefinitions: Record<string, PageDefinition> = {
   poker: { title: "Poker", kind: "catalog", category: "Poker" },
   search: { title: "Search Games", kind: "catalog" },
   providers: { title: "Game Providers", kind: "providers" },
-  sportsbook: { title: "Sportsbook", kind: "sports" },
   promotions: { title: "Bonus Offers", kind: "promotions" },
   "loyalty-tiers": { title: "Loyalty Tiers", kind: "loyalty" },
   affiliates: { title: "Choicestakes Partners", kind: "affiliate" },
@@ -154,8 +152,8 @@ export const labelRoutes: Record<string, string> = {
   Lottery: "/lotto-scratch",
   Roulette: "/roulette",
   Poker: "/poker",
-  Sports: "/sportsbook",
-  Sportsbook: "/sportsbook",
+  Sports: "/sports",
+  Sportsbook: "/sports",
   Promotions: "/promotions",
   "Loyalty Tiers": "/loyalty-tiers",
   Affiliate: "/affiliates",
