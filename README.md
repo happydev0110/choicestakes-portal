@@ -28,7 +28,7 @@ MySQL must be enabled and migrated for registration/login to succeed; there is n
 
 Global toast notifications use `useToast()` from `app/components/toast-provider.tsx`. Call `toast.success(message)` or `toast.error(message)` after a user action. Success cards are green and errors are red; both include a close button. They survive client navigation, show at most three cards, and suppress identical visible messages. Success cards close after five seconds and errors after seven, pausing on hover, keyboard focus, or a hidden tab. Login, registration, both logout controls, favorites, and game-launch/fullscreen failures use this shared component; passive background refreshes remain quiet.
 
-The signed-in header shows the saved display name with an initials avatar, the current game balance, notifications, and an account menu. The green plus opens Wallet; payments are not connected. The header and game screens share one wallet request, refreshed on navigation, returning to the tab, and every 30 seconds while visible. An unavailable wallet displays a dash rather than a zero balance. Login checks use a loading placeholder instead of briefly showing guest controls.
+The signed-in header shows the saved display name with an initials avatar, the current game balance, notifications, and an account menu. The green plus opens Wallet; payments are not connected. The header and game screens share wallet state, refreshed on committed balance-change notifications, navigation, returning to the tab, and stream reconnection. There is no 30-second balance timer. The authenticated SSE stream uses `/api/gaming/wallet/events` through a dedicated non-buffering proxy; deploy the matching backend and follow `../choicestakes-backend/docs/live-wallet.md` for Nginx and multi-worker Redis configuration. An unavailable wallet displays a dash rather than a zero balance. Login checks use a loading placeholder instead of briefly showing guest controls.
 
 Bet History (`/account/bets`) uses the wallet API's latest 20 game ledger entries. It is recent activity, not a complete paginated betting report; the existing endpoint does not return game names or round IDs. The notification panel currently has an empty state and disabled Mark All as Read, ready for a future notification service. Menus support keyboard navigation, Escape, outside-click dismissal, and mobile layouts.
 
@@ -45,9 +45,14 @@ setting; it defaults to `044708be-61d4-5516-91dc-b3829c296294`. The configured g
 must exist and be available in the backend catalog, with sandbox launches enabled.
 Existing `/sportsbook` URLs redirect to `/sports`. Homepage sport cards open the
 Betby lobby; choose the sport inside Betby rather than using the old preview filters.
-Fullscreen, Deposit and Close use the existing game shell; Close returns to the last
-lobby or Casino, never back to `/sports`. No launch runs during server rendering or
-link prefetching. Actual Betby availability still depends on API-MATIC.
+The Sports header centers the shared game-balance pill on desktop and mobile. Its
+green plus opens Wallet on the Deposit tab without navigating away or launching a
+new game session. It uses the same wallet data and refresh cycle as the normal
+header; loading displays an ellipsis and an unavailable balance displays a dash.
+Other `/play/{uuid}` pages retain the Deposit button. Fullscreen and Close use the
+existing game shell; Close returns to the last lobby or Casino, never back to
+`/sports`. No launch runs during server rendering or link prefetching. Actual Betby
+availability still depends on API-MATIC.
 
 ## Included
 

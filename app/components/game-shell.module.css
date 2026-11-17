@@ -56,6 +56,11 @@
   font-weight: 700;
 }
 
+.center {
+  justify-self: center;
+  min-width: 0;
+}
+
 .controls {
   display: flex;
   justify-self: end;
@@ -137,6 +142,11 @@
 
   .brand {
     width: 42px;
+  }
+
+  .center {
+    /* Reserve equal side tracks for the 88px Fullscreen/Close controls. */
+    max-width: calc(100vw - 208px);
   }
 
   .controls {

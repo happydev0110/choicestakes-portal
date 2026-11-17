@@ -5,12 +5,14 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Maximize, Minimize, X } from "lucide-react";
 import { BrandLogo } from "./brand-logo";
+import { BalanceControl } from "./balance-control";
 import { useWalletModal, WalletModal } from "./wallet-modal";
 import styles from "./game-shell.module.css";
 
-export function GameShell({ children, returnHref }: {
+export function GameShell({ children, returnHref, showBalance = false }: {
   children: React.ReactNode;
   returnHref: string;
+  showBalance?: boolean;
 }) {
   const router = useRouter();
   const { openWallet, request } = useWalletModal();
@@ -72,8 +74,12 @@ export function GameShell({ children, returnHref }: {
           onNavigate={(event) => { event.preventDefault(); void leave("/"); }}>
           <BrandLogo />
         </Link>
-        <button type="button" className={styles.wallet} aria-haspopup="dialog" aria-expanded={Boolean(request)}
-          onClick={(event) => openWallet(event.currentTarget)}>Deposit</button>
+        <div className={styles.center}>
+          {showBalance ? <BalanceControl walletLink={false} /> : (
+            <button type="button" className={styles.wallet} aria-haspopup="dialog" aria-expanded={Boolean(request)}
+              onClick={(event) => openWallet(event.currentTarget)}>Deposit</button>
+          )}
+        </div>
         <div className={styles.controls}>
           <button type="button" className={styles.iconButton}
             aria-label={fullscreenLabel} title={fullscreenLabel}

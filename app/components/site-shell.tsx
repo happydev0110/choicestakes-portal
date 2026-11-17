@@ -64,7 +64,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   };
   if (pathname === "/sports" || pathname.startsWith("/play/")) {
     return <SiteContext.Provider value={{ navigate }}>
-      <GameShell returnHref={gameReturnHref.current}>{children}</GameShell>
+      <GameShell returnHref={gameReturnHref.current} showBalance={pathname === "/sports"}>{children}</GameShell>
     </SiteContext.Provider>;
   }
   return (

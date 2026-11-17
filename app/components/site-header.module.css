@@ -10,16 +10,10 @@
 .center { justify-self: center; min-width: 0; }
 .actions { display: flex; align-items: center; justify-self: end; gap: 12px; min-width: 0; }
 .actions > a { white-space: nowrap; }
-.circle, .profile, .balance {
+.circle, .profile {
   display: inline-flex; align-items: center; border: 1px solid #23335b; border-radius: 999px; background: #1b284b;
 }
 .circle { justify-content: center; width: 40px; height: 40px; flex-shrink: 0; color: #ecf4ff; }
-.balance { gap: 6px; padding: 3px; background: #101a31; }
-.balanceValue { display: flex; align-items: center; gap: 8px; min-width: 0; }
-.currency { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #1b284b; border: 1px solid #23335b; font-size: 12px; flex-shrink: 0; }
-.amount { font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; max-width: 155px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.addFunds { display: grid; place-items: center; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%; background: #3bde7e; color: #fff; flex-shrink: 0; }
-.addFunds:hover { background: #54ed91; }
 .profile { gap: 9px; padding: 3px 16px 3px 3px; height: 40px; color: #fff; font-weight: 700; }
 .avatar { display: grid; place-items: center; width: 32px; height: 32px; flex-shrink: 0; border-radius: 50%; border: 1px solid #36718d; background: linear-gradient(135deg, #164663, #0b2038); color: #81e3f5; font-size: 12px; letter-spacing: .03em; }
 .username { max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -61,19 +55,12 @@
   .circle, .profile { width: 34px; height: 34px; }
   .profile { padding: 2px; }
   .avatar { width: 28px; height: 28px; font-size: 11px; }
-  .balance { gap: 5px; padding: 2px; max-width: 100%; }
-  .balanceValue { gap: 4px; }
-  .currency { width: 23px; height: 23px; font-size: 11px; }
-  .amount { font-size: 13px; max-width: 90px; }
-  .addFunds { width: 29px; height: 29px; }
-  .addFunds svg { width: 20px; }
   .popup { position: fixed; top: 63px; right: 12px; max-width: calc(100% - 24px); max-height: calc(100dvh - 135px); overflow-y: auto; }
   .skeleton { width: 125px; height: 34px; }
 }
 @media (max-width: 360px) {
   .header:global(.header) { padding-inline: 8px; gap: 6px; }
   .actions { gap: 5px; }
-  .amount { max-width: 62px; }
   .circle, .profile { width: 32px; height: 32px; }
   .avatar { width: 26px; height: 26px; }
 }

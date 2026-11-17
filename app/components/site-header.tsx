@@ -3,11 +3,10 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
-import { Bell, Coins, LogOut, Plus, ReceiptText, Search, Trophy, UserRound, Wallet } from "lucide-react";
+import { Bell, LogOut, ReceiptText, Search, Trophy, UserRound, Wallet } from "lucide-react";
 import { BrandLogo } from "./brand-logo";
 import { usePlayer } from "./player-auth";
-import { useGameWallet } from "./game-wallet";
-import { useWalletModal } from "./wallet-modal";
+import { BalanceControl } from "./balance-control";
 import styles from "./site-header.module.css";
 
 const accountItems = [
@@ -20,8 +19,6 @@ type Panel = "account" | "notifications" | null;
 
 export function SiteHeader() {
   const { player, loading, logout } = usePlayer();
-  const { wallet, error: walletError } = useGameWallet();
-  const { openWallet, request } = useWalletModal();
   const pathname = usePathname();
   const router = useRouter();
   const [panel, setPanel] = useState<Panel>(null);
@@ -86,23 +83,12 @@ export function SiteHeader() {
 
   const name = player?.displayName.trim() || "My Account";
   const initials = name.split(/\s+/).slice(0, 2).map((part) => Array.from(part)[0]).join("").toUpperCase();
-  const currencySymbol = wallet ? ({ USD: "$", EUR: "€", GBP: "£" } as Record<string, string>)[wallet.currency] : null;
-  const balanceLabel = wallet ? `Game balance: ${wallet.balance} ${wallet.currency}`
-    : walletError ? "Game balance unavailable" : "Loading game balance";
 
   return (
     <header className={`header ${styles.header}`}>
       <Link className={styles.brand} href="/" aria-label="Choicestakes home"><BrandLogo /></Link>
       <div className={styles.center}>
-        {!loading && player && <div className={styles.balance}>
-          <Link href="/account/wallet" className={styles.balanceValue} aria-label={balanceLabel} title={balanceLabel}>
-            <span className={styles.currency} aria-hidden="true">{currencySymbol ?? <Coins size={14} />}</span>
-            <span className={styles.amount}>{wallet?.balance ?? (walletError ? "—" : "…")}</span>
-          </Link>
-          <button type="button" className={styles.addFunds} aria-label="Open deposit wallet" title="Deposit"
-            aria-haspopup="dialog" aria-expanded={Boolean(request)}
-            onClick={(event) => { setPanel(null); openWallet(event.currentTarget); }}><Plus size={23} strokeWidth={3} aria-hidden="true" /></button>
-        </div>}
+        <BalanceControl onDeposit={() => setPanel(null)} />
       </div>
       <div className={styles.actions}>
         <Link className={`${styles.circle} ${styles.search}`} href="/search" aria-label="Search games"><Search size={18} /></Link>
