@@ -1,4 +1,5 @@
 "use client";
+import { useText } from "../../i18n/use-text";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
@@ -25,6 +26,7 @@ export function SandboxWallet({
   refreshKey?: number;
   compact?: boolean;
 }) {
+  const t = useText();
   const { wallet, error, loading, refresh } = useGameWallet();
   useEffect(() => {
     if (refreshKey > 0) refresh();
@@ -33,11 +35,11 @@ export function SandboxWallet({
     <section className={`panel sandbox-wallet${compact ? " sandbox-wallet-compact" : ""}`}>
       <div className="sandbox-wallet-heading">
         <div>
-          <h2>Game balance</h2>
+          <h2>{t("Game balance")}</h2>
         </div>
         <button
           className="secondary"
-          aria-label="Refresh game balance"
+          aria-label={t("Refresh game balance")}
           onClick={refresh}
           disabled={loading}
         >
@@ -45,9 +47,9 @@ export function SandboxWallet({
         </button>
       </div>
       {error ? (
-        <p role="status">{error}</p>
+        <p role="status">{t(error)}</p>
       ) : !wallet ? (
-        <p role="status">Loading game balance…</p>
+        <p role="status">{t("Loading game balance…")}</p>
       ) : (
         <>
           <strong className="sandbox-balance">
@@ -95,6 +97,7 @@ export function ProviderGamePlayer({
   launchEnabled: boolean;
   playPath?: string;
 }) {
+  const t = useText();
   const router = useRouter();
   const session = usePlayer();
   const authenticated = !session.loading && session.player?.id === playerId;
@@ -134,22 +137,22 @@ export function ProviderGamePlayer({
         <div className={styles.state} aria-busy={opening}>
           <div className={styles.message}>
             {opening && <LoaderCircle className={styles.spinner} size={34} aria-hidden="true" />}
-            <h2 aria-live="polite">{!launchEnabled ? "Game temporarily unavailable" : failed ? "Unable to open game" : "LOADING..."}</h2>
+            <h2 aria-live="polite">{t(!launchEnabled ? "Game temporarily unavailable" : failed ? "Unable to open game" : "LOADING...")}</h2>
             {!launchEnabled ? (
-              <p>Sandbox play is not available yet. Please try again later.</p>
+              <p>{t("Sandbox play is not available yet. Please try again later.")}</p>
             ) : failed && state.status === "failed" ? (
-              <p className={styles.error} role="alert">{state.message}</p>
+              <p className={styles.error} role="alert">{t(state.message)}</p>
             ) : null}
             {failed && launchEnabled && authenticated && (
               <>
                 <div className={styles.actions}>
-                  <button className="primary" onClick={() => retry()}><RefreshCw size={18} />Retry</button>
-                  <button className="secondary" onClick={() => retry("demo")}><Play size={18} />Try demo mode</button>
+                  <button className="primary" onClick={() => retry()}><RefreshCw size={18} />{t("Retry")}</button>
+                  <button className="secondary" onClick={() => retry("demo")}><Play size={18} />{t("Try demo mode")}</button>
                 </div>
-                <p>Retry opens a new session. Demo mode availability depends on the provider.</p>
+                <p>{t("Retry opens a new session. Demo mode availability depends on the provider.")}</p>
               </>
             )}
-            <Link className={styles.back} href="/casino">Back</Link>
+            <Link className={styles.back} href="/casino">{t("Back")}</Link>
           </div>
         </div>
       )}
@@ -158,11 +161,12 @@ export function ProviderGamePlayer({
 }
 
 export function GamePlayerUnavailable({ title, message }: { title: string; message: string }) {
+  const t = useText();
   return <section className={styles.state}>
     <div className={styles.message}>
-      <h1>{title}</h1>
-      <p>{message}</p>
-      <Link className={styles.back} href="/casino">Back</Link>
+      <h1>{t(title)}</h1>
+      <p>{t(message)}</p>
+      <Link className={styles.back} href="/casino">{t("Back")}</Link>
     </div>
   </section>;
 }

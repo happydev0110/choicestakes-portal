@@ -1,4 +1,5 @@
 "use client";
+import { useText } from "../../i18n/use-text";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { Check, X } from "lucide-react";
@@ -16,6 +17,7 @@ export function useToast() {
 }
 
 function ToastCard({ toast, hidden, dismiss }: { toast: Toast; hidden: boolean; dismiss: (id: number) => void }) {
+  const t = useText();
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const remaining = useRef(toast.duration);
@@ -40,9 +42,9 @@ function ToastCard({ toast, hidden, dismiss }: { toast: Toast; hidden: boolean; 
     <div className={styles.progress} style={{ animationPlayState: paused ? "paused" : "running" }} aria-hidden="true" />
     <div className={styles.message} role={toast.kind === "error" ? "alert" : "status"} aria-atomic="true">
       <span className={styles.icon} aria-hidden="true">{toast.kind === "success" ? <Check size={24} strokeWidth={3} /> : <X size={24} strokeWidth={3} />}</span>
-      <div className={styles.copy}><strong>{title}</strong><p>{toast.message}</p></div>
+      <div className={styles.copy}><strong>{t(title)}</strong><p>{t(toast.message)}</p></div>
     </div>
-    <button type="button" className={styles.close} aria-label={`Dismiss ${toast.kind} notification`} onClick={() => dismiss(toast.id)}><X size={14} /></button>
+    <button type="button" className={styles.close} aria-label={t("Dismiss notification")} onClick={() => dismiss(toast.id)}><X size={14} /></button>
   </div>;
 }
 

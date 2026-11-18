@@ -1,4 +1,5 @@
 "use client";
+import { useText } from "../../i18n/use-text";
 import Link from "next/link";
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { Gamepad2, Heart, Play } from "lucide-react";
@@ -83,6 +84,7 @@ export function FavoriteButton({
   game: ProviderGame;
   compact?: boolean;
 }) {
+  const t = useText();
   const { ids, toggle, error } = useProviderFavorites();
   const saved = ids.includes(game.uuid);
   return (
@@ -90,15 +92,15 @@ export function FavoriteButton({
       <button
         className="secondary"
         aria-pressed={saved}
-        aria-label={`${saved ? "Remove" : "Add"} ${game.name} ${saved ? "from" : "to"} favorites`}
+        aria-label={`${t(saved ? "Remove from favorites" : "Add to favorites")}: ${game.name}`}
         onClick={() => toggle(game.uuid)}
       >
         <Heart size={18} fill={saved ? "currentColor" : "none"} />
-        {!compact && (saved ? "Saved to favorites" : "Add to favorites")}
+        {!compact && (t(saved ? "Saved to favorites" : "Add to favorites"))}
       </button>
       {error && (
         <p role="alert" className="auth-error">
-          {error}
+          {t(error)}
         </p>
       )}
     </div>
@@ -121,6 +123,7 @@ export function ProviderArtwork({ game }: { game: ProviderGame }) {
   );
 }
 export function ProviderGameCard({ game }: { game: ProviderGame }) {
+  const t = useText();
   return (
     <article className="provider-game-card">
       <Link
@@ -128,7 +131,7 @@ export function ProviderGameCard({ game }: { game: ProviderGame }) {
         href={`/play/${game.uuid}`}
         prefetch={false}
         draggable={false}
-        aria-label={`Play ${game.name} by ${game.provider}`}
+        aria-label={t("Play {game} by {provider}", {game: game.name, provider: game.provider})}
       >
         <div className="catalog-art provider-art">
           <ProviderArtwork game={game} />

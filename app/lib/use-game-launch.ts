@@ -2,6 +2,8 @@
 import { useEffect, useRef, useState } from "react";
 import { createGameRequestId, gamingRequest } from "./gaming";
 import { useToast } from "../components/toast-provider";
+import { useLocale } from "next-intl";
+import { resolveLocale } from "../../i18n/locales";
 
 type Mode = "real" | "demo";
 type LaunchState =
@@ -10,6 +12,11 @@ type LaunchState =
   | { status: "failed"; message: string; unauthorized: boolean };
 
 export function useGameLaunch(gameId: string, playerId: string, enabled: boolean) {
+  const locale = useLocale();
+  // Read the latest preference only when creating a new attempt. Changing the
+  // portal language must never launch a second session or interrupt an iframe.
+  const launchLanguage = useRef(resolveLocale(locale));
+  launchLanguage.current = resolveLocale(locale);
   const toast = useToast();
   const [state, setState] = useState<LaunchState>({ status: "idle" });
   const [request, setRequest] = useState({ number: 0, mode: "real" as Mode });
@@ -35,6 +42,7 @@ export function useGameLaunch(gameId: string, playerId: string, enabled: boolean
         promise: gamingRequest<{ link: string }>(`games/${gameId}/launch`, {
           requestId: createGameRequestId(),
           mode: request.mode,
+          lang: launchLanguage.current,
         }),
       };
     }

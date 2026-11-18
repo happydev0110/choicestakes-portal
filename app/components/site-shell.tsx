@@ -1,4 +1,5 @@
 "use client";
+import { useText } from "../../i18n/use-text";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
@@ -8,7 +9,6 @@ import {
   Home,
   Headphones,
   Trophy,
-  X,
 } from "lucide-react";
 import { asset } from "../data";
 import { labelRoutes, pageDefinitions } from "../site-map";
@@ -23,6 +23,7 @@ const SiteContext = createContext<{
 }>({ navigate: () => {} });
 export const useSite = () => useContext(SiteContext);
 export function SiteShell({ children }: { children: React.ReactNode }) {
+  const t = useText();
   const router = useRouter();
   const pathname = usePathname();
   const gameReturnHref = useRef("/casino");
@@ -30,7 +31,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   const [cookies, setCookies] = useState(false);
   const [preferences, setPreferences] = useState(false);
   const [analytics, setAnalytics] = useState(false);
-  const language = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     setCookies(!localStorage.getItem("choicestakes-cookie-preferences"));
   }, []);
@@ -45,10 +45,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   }, [pathname]);
   const navigate = (label: string) => {
     setMenu(false);
-    if (label === "Language") {
-      language.current?.showModal();
-      return;
-    }
     router.push(labelRoutes[label] ?? "/casino");
   };
   const active =
@@ -71,9 +67,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
     <SiteContext.Provider
       value={{ navigate }}
     >
-      <a className="skip-link" href="#main-content">
-        Skip to content
-      </a>
+      <a className="skip-link" href="#main-content">{t("Skip to content")}</a>
       <SiteHeader />
       <Sidebar
         active={active === "Sportsbook" ? "Sports" : active}
@@ -85,44 +79,34 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         {children}
         <SiteFooter onCookieSettings={() => setCookies(true)} />
       </main>
-      <Link href="/contact" className="chat-fab" aria-label="Contact support">
+      <Link href="/contact" className="chat-fab" aria-label={t("Contact support")}>
         <Headphones size={25} />
       </Link>
-      <nav className="mobile-nav" aria-label="Mobile navigation">
+      <nav className="mobile-nav" aria-label={t("Mobile navigation")}>
         <button
           aria-expanded={menu}
           aria-controls="mobile-menu"
           onClick={() => setMenu(!menu)}
         >
-          <Menu />
-          Menu
-        </button>
+          <Menu />{t("Menu")}</button>
         <Link
           href="/search"
           className={pathname === "/search" ? "selected" : ""}
         >
-          <Search />
-          Search
-        </Link>
+          <Search />{t("Search")}</Link>
         <Link
           href="/casino"
           className={pathname === "/casino" ? "selected" : ""}
         >
-          <img src={asset("casino.9e4b02a8.svg")} alt="" />
-          Casino
-        </Link>
+          <img src={asset("casino.9e4b02a8.svg")} alt="" />{t("Casino")}</Link>
         <Link
           href="/sports"
           prefetch={false}
           className={pathname === "/sports" ? "selected" : ""}
         >
-          <Trophy />
-          Sports
-        </Link>
+          <Trophy />{t("Sports")}</Link>
         <Link href="/" className={pathname === "/" ? "selected" : ""}>
-          <Home />
-          Home
-        </Link>
+          <Home />{t("Home")}</Link>
       </nav>
       {cookies && (
         <section className="cookie-banner" aria-label="Cookie preferences">
@@ -157,28 +141,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           </div>
         </section>
       )}
-      <dialog
-        ref={language}
-        aria-label="Language"
-        onClick={(e) => {
-          if (e.target === e.currentTarget) language.current?.close();
-        }}
-      >
-        <div className="modal">
-          <button
-            className="close-modal"
-            aria-label="Close dialog"
-            onClick={() => language.current?.close()}
-          >
-            <X />
-          </button>
-          <h2>Language</h2>
-          <p>English is the language available in this frontend.</p>
-          <button className="primary" onClick={() => language.current?.close()}>
-            English ✓
-          </button>
-        </div>
-      </dialog>
       <WalletModal />
     </SiteContext.Provider>
   );

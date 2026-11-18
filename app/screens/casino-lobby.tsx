@@ -1,4 +1,5 @@
 "use client";
+import { useText } from "../../i18n/use-text";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -72,6 +73,7 @@ function CasinoRow({
   pending?: boolean;
   unavailable?: boolean;
 }) {
+  const t = useText();
   const slider = useRef<SwiperInstance | null>(null);
   const [canSlide, setCanSlide] = useState({ left: false, right: false });
   function updateNavigation(instance: SwiperInstance) {
@@ -101,16 +103,15 @@ function CasinoRow({
           ) : (
             <Gamepad2 size={23} />
           )}
-          {title}
+          {t(title)}
         </h2>
         <div className="casino-row-actions">
           {total > 0 && (
-            <Link href={`/${category}`} aria-label={category === "all-games" ? "View all games" : `View all ${title}`}>
-              View all <span className="casino-row-count">({total})</span>
+            <Link href={`/${category}`} aria-label={t("View all {category}", {category: t(title)})}>{t("View all")} <span className="casino-row-count">({total})</span>
             </Link>
           )}
           <button
-            aria-label={`Previous ${title}`}
+            aria-label={t("Previous {category}", {category: t(title)})}
             aria-controls={pending || games.length ? `casino-${category}-slider` : undefined}
             disabled={!canSlide.left || pending || !games.length}
             onClick={() => slide("previous")}
@@ -118,7 +119,7 @@ function CasinoRow({
             <ChevronLeft size={16} />
           </button>
           <button
-            aria-label={`Next ${title}`}
+            aria-label={t("Next {category}", {category: t(title)})}
             aria-controls={pending || games.length ? `casino-${category}-slider` : undefined}
             disabled={!canSlide.right || pending || !games.length}
             onClick={() => slide("next")}
@@ -132,7 +133,7 @@ function CasinoRow({
           id={`casino-${category}-slider`}
           className="casino-row-skeletons"
           role="status"
-          aria-label={`Loading ${title}`}
+          aria-label={t("Loading games…")}
         >
           {Array.from({ length: 12 }, (_, index) => (
             <div className="casino-card-skeleton" key={index} aria-hidden="true" />
@@ -152,7 +153,7 @@ function CasinoRow({
           watchOverflow
           watchSlidesProgress
           a11y={{
-            containerMessage: title,
+            containerMessage: t(title),
             containerRoleDescriptionMessage: "carousel",
             itemRoleDescriptionMessage: "slide",
           }}
@@ -175,8 +176,8 @@ function CasinoRow({
         </Swiper>
       ) : (
         <p className="casino-category-empty">
-          {unavailable ? "This collection is temporarily unavailable." : "No games available in this category yet."}{" "}
-          <Link href="/all-games">Browse all games</Link>
+          {t(unavailable ? "This collection is temporarily unavailable." : "No games available in this category yet.")}{" "}
+          <Link href="/all-games">{t("Browse all games")}</Link>
         </p>
       )}
     </section>
@@ -192,6 +193,7 @@ export function CasinoLobby({
   initialError?: string;
   pending?: boolean;
 }) {
+  const t = useText();
   const [data, setData] = useState(initialData);
   const [error, setError] = useState(initialError);
   const [loading, setLoading] = useState(!initialData && !initialError);
@@ -264,7 +266,7 @@ export function CasinoLobby({
   const busy = pending || (loading && !data);
   return (
     <div className="casino-lobby">
-      <h1 className="sr-only">Online Casino</h1>
+      <h1 className="sr-only">{t("Online Casino")}</h1>
       <div className="casino-banner">
         <img
           src="/assets/casino-banner.a71990e3.webp"
@@ -276,8 +278,8 @@ export function CasinoLobby({
         <label className="casino-search">
           <Search size={18} />
           <input
-            aria-label="Search casino games"
-            placeholder="Search games"
+            aria-label={t("Search games")}
+            placeholder={t("Search games")}
             maxLength={100}
             value={filters.search}
             disabled={pending}
@@ -287,7 +289,7 @@ export function CasinoLobby({
           />
           {filters.search && (
             <button
-              aria-label="Clear casino search"
+              aria-label={t("Clear search")}
               onClick={() => setFilters({ ...filters, search: "", page: 1 })}
             >
               <X size={18} />
@@ -296,14 +298,14 @@ export function CasinoLobby({
         </label>
         <select
           className="casino-provider-filter"
-          aria-label="Filter casino provider"
+          aria-label={t("Filter game provider")}
           value={filters.provider}
           disabled={pending}
           onChange={(event) =>
             setFilters({ ...filters, provider: event.target.value, page: 1 })
           }
         >
-          <option value="">All providers</option>
+          <option value="">{t("All providers")}</option>
           {data?.providers.map((provider) => (
             <option key={provider} value={provider}>
               {provider}
@@ -311,20 +313,20 @@ export function CasinoLobby({
           ))}
         </select>
       </div>
-      <nav className="casino-category-nav" aria-label="Casino categories">
+      <nav className="casino-category-nav" aria-label={t("Game categories")}>
         {categories.map(({ category, title, icon }) => (
           <Link key={category} href={`/${category}`}>
             <img src={`/assets/${icon}`} alt="" />
-            {title}
+            {t(title)}
           </Link>
         ))}
       </nav>
       <div className="casino-collection-info">
         <span>
-          {data ? `${data.total} ${data.total === 1 ? "game" : "games"}` : "Game collection"}
+          {data ? t("{count, plural, one {# game} other {# games}}", {count: data.total}) : t("Game collection")}
         </span>
-        <Link href="/all-games">All games</Link>
-        <Link href="/providers">Providers</Link>
+        <Link href="/all-games">{t("All Games")}</Link>
+        <Link href="/providers">{t("Providers")}</Link>
       </div>
       {searching ? (
         <section
@@ -333,27 +335,23 @@ export function CasinoLobby({
           aria-busy={searchLoading}
         >
           <div className="casino-row-heading">
-            <h2>Search results</h2>
+            <h2>{t("Search results")}</h2>
             <button
               className="secondary"
               onClick={() => setFilters({ search: "", provider: "", page: 1 })}
-            >
-              Clear filters
-            </button>
+            >{t("Clear filters")}</button>
           </div>
           {searchError ? (
             <div className="casino-category-empty" role="alert">
-              <p>{searchError}</p>
+              <p>{t(searchError)}</p>
               <button
                 className="secondary"
                 onClick={() => setSearchRetry((value) => value + 1)}
-              >
-                Try again
-              </button>
+              >{t("Try again")}</button>
             </div>
           ) : searchLoading || !results ? (
             <div className="casino-results-skeleton" role="status">
-              <span className="sr-only">Searching games</span>
+              <span className="sr-only">{t("Searching games")}</span>
               {Array.from({ length: 8 }, (_, index) => (
                 <div
                   className="casino-card-skeleton"
@@ -364,12 +362,12 @@ export function CasinoLobby({
             </div>
           ) : !results.games.length ? (
             <p className="casino-category-empty" role="status">
-              No matching games. Try another search or provider.
+              {t("No matching games")}. {t("Try another search or provider.")}
             </p>
           ) : (
             <>
               <p className="result-summary" role="status">
-                {results.total} matching games
+                {t("{count, plural, one {# game} other {# games}}", {count: results.total})}
               </p>
               <ProviderGameGrid games={results.games} />
               <nav
@@ -382,12 +380,9 @@ export function CasinoLobby({
                   onClick={() =>
                     setFilters({ ...filters, page: results.page - 1 })
                   }
-                >
-                  Previous
-                </button>
+                >{t("Previous")}</button>
                 <span>
-                  Page {results.page} of{" "}
-                  {Math.ceil(results.total / results.perPage)}
+                  {t("Page {page} of {pages}", {page: results.page, pages: Math.ceil(results.total / results.perPage)})}
                 </span>
                 <button
                   className="secondary"
@@ -395,9 +390,7 @@ export function CasinoLobby({
                   onClick={() =>
                     setFilters({ ...filters, page: results.page + 1 })
                   }
-                >
-                  Next
-                </button>
+                >{t("Next")}</button>
               </nav>
             </>
           )}
@@ -406,13 +399,11 @@ export function CasinoLobby({
         <>
           {error && (
             <div className="casino-category-empty" role="alert">
-              <p>{error}</p>
+              <p>{t(error)}</p>
               <button
                 className="secondary"
                 onClick={() => setRetry((value) => value + 1)}
-              >
-                Refresh collection
-              </button>
+              >{t("Refresh collection")}</button>
             </div>
           )}
           {!busy && !error && data && collectionIsEmpty(data) && (
@@ -422,13 +413,10 @@ export function CasinoLobby({
             />
           )}
           {data?.catalog?.status === "stale" && (
-            <p className="provider-availability">
-              Showing the last available collection while updates are
-              temporarily unavailable.
-            </p>
+            <p className="provider-availability">{t("Showing the last available collection while updates are temporarily unavailable.")}</p>
           )}
           <CasinoRow
-            title="All Games"
+            title={t("All Games")}
             category="all-games"
             total={data?.total ?? 0}
             games={data?.games ?? []}

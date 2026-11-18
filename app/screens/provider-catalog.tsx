@@ -1,4 +1,5 @@
 "use client";
+import { useText } from "../../i18n/use-text";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Gamepad2, Search } from "lucide-react";
@@ -26,6 +27,7 @@ export function ProviderCatalog({
   favoritesOnly?: boolean;
   embedded?: boolean;
 }) {
+  const t = useText();
   const [data, setData] = useState<ProviderCatalogData | null>(null);
   const [filters, setFilters] = useState({
     search: "",
@@ -119,19 +121,19 @@ export function ProviderCatalog({
   return (
     <section
       className={`provider-catalog ${embedded ? "provider-lobby" : "page-wrap"}`}
-      aria-label={heading}
+      aria-label={t(heading)}
     >
       {embedded ? (
         <div className="section-heading">
           <h2>
             <Gamepad2 size={22} />
-            {heading}
+            {t(heading)}
           </h2>
-          <Link href="/providers">Game providers →</Link>
+          <Link href="/providers">{t("Game Providers")} →</Link>
         </div>
       ) : (
         <PageHeading
-          title={heading}
+          title={t(heading)}
           eyebrow="CHOICESTAKES"
           description={
             favoritesOnly
@@ -140,7 +142,7 @@ export function ProviderCatalog({
           }
         />
       )}
-      <nav className="pill-nav" aria-label="Game categories">
+      <nav className="pill-nav" aria-label={t("Game categories")}>
         {categoryLinks.map(([name, path]) => (
           <Link
             key={path}
@@ -153,11 +155,11 @@ export function ProviderCatalog({
                 : ""
             }
           >
-            {name}
+            {t(name)}
           </Link>
         ))}
-        <Link href="/providers">Providers</Link>
-        <Link href="/account/favorites">Favorites</Link>
+        <Link href="/providers">{t("Providers")}</Link>
+        <Link href="/account/favorites">{t("Favorites")}</Link>
       </nav>
       {data?.configured && !data.launchEnabled && !collectionIsEmpty(data) && (
         <p className="provider-availability">
@@ -169,20 +171,20 @@ export function ProviderCatalog({
         <label className="field-search">
           <Search size={18} />
           <input
-            aria-label="Search provider games"
-            placeholder="Search games or providers"
+            aria-label={t("Search games")}
+            placeholder={t("Search games or providers")}
             maxLength={100}
             value={filters.search}
             onChange={(event) => update({ search: event.target.value })}
           />
         </label>
         <select
-          aria-label="Filter game provider"
+          aria-label={t("Filter game provider")}
           value={filters.provider}
           onChange={(event) => update({ provider: event.target.value })}
           disabled={!!initialProvider}
         >
-          <option value="">All providers</option>
+          <option value="">{t("All providers")}</option>
           {[
             ...new Set([
               ...(data?.providers ?? []),
@@ -195,42 +197,38 @@ export function ProviderCatalog({
           ))}
         </select>
         <select
-          aria-label="Sort games"
+          aria-label={t("Sort games")}
           value={filters.sort}
           onChange={(event) => update({ sort: event.target.value })}
         >
-          <option value="provider">Provider</option>
-          <option value="name">Name A–Z</option>
-          <option value="name-desc">Name Z–A</option>
+          <option value="provider">{t("Provider")}</option>
+          <option value="name">{t("Name A–Z")}</option>
+          <option value="name-desc">{t("Name Z–A")}</option>
         </select>
       </div>
       {error ? (
         <div className="panel provider-empty" role="alert">
-          <h2>Games temporarily unavailable</h2>
-          <p>{error}</p>
+          <h2>{t("Games temporarily unavailable")}</h2>
+          <p>{t(error)}</p>
           <button
             className="secondary"
             onClick={() => setRetry((value) => value + 1)}
-          >
-            Try again
-          </button>
+          >{t("Try again")}</button>
         </div>
       ) : loading ? (
         <div className="panel provider-empty" role="status">
           <Gamepad2 size={38} />
-          <p>Loading games…</p>
+          <p>{t("Loading games…")}</p>
         </div>
       ) : !data?.configured ? (
         <div className="panel provider-empty">
           <Gamepad2 size={46} />
-          <h2>Games temporarily unavailable</h2>
+          <h2>{t("Games temporarily unavailable")}</h2>
           <p>The collection is not available yet. Please check back soon.</p>
           <button
             className="secondary"
             onClick={() => setRetry((value) => value + 1)}
-          >
-            Refresh collection
-          </button>
+          >{t("Refresh collection")}</button>
         </div>
       ) : collectionIsEmpty(data) ? (
         <CatalogAvailability
@@ -241,30 +239,28 @@ export function ProviderCatalog({
         <div className="panel provider-empty">
           <Search size={38} />
           <h2>
-            {filters.search || filters.provider
+            {t(filters.search || filters.provider
               ? "No matching games"
               : favoritesOnly
                 ? "Your collection starts here"
                 : category
                   ? "No games in this category yet"
-                  : "No matching games"}
+                  : "No matching games")}
           </h2>
           <p>
-            {filters.search || filters.provider
+            {t(filters.search || filters.provider
               ? "Try another search or provider."
               : favoritesOnly
                 ? "Choose the heart on any game to save it on this device."
                 : category
                   ? "Explore All Games while this collection is being organized."
-                  : "Try another search or provider."}
+                  : "Try another search or provider.")}
           </p>
           {(filters.search || filters.provider) && !initialProvider && (
             <button
               className="secondary"
               onClick={() => update({ search: "", provider: "" })}
-            >
-              Clear filters
-            </button>
+            >{t("Clear filters")}</button>
           )}
           <Link className="secondary" href="/casino">
             Explore all games
@@ -273,13 +269,10 @@ export function ProviderCatalog({
       ) : (
         <>
           {data.catalog?.status === "stale" && (
-            <p className="provider-availability">
-              Showing the last available collection while updates are
-              temporarily unavailable.
-            </p>
+            <p className="provider-availability">{t("Showing the last available collection while updates are temporarily unavailable.")}</p>
           )}
           <p className="result-summary" role="status">
-            {data.total} {data.total === 1 ? "game" : "games"}
+            {t("{count, plural, one {# game} other {# games}}", {count: data.total})}
           </p>
           <ProviderGameGrid games={data.games} />
           <nav className="provider-pagination" aria-label="Game pages">
@@ -287,20 +280,15 @@ export function ProviderCatalog({
               className="secondary"
               disabled={data.page === 1}
               onClick={() => update({ page: data.page - 1 })}
-            >
-              Previous
-            </button>
+            >{t("Previous")}</button>
             <span>
-              Page {data.page} of{" "}
-              {Math.max(1, Math.ceil(data.total / data.perPage))}
+              {t("Page {page} of {pages}", {page: data.page, pages: Math.max(1, Math.ceil(data.total / data.perPage))})}
             </span>
             <button
               className="secondary"
               disabled={data.page * data.perPage >= data.total}
               onClick={() => update({ page: data.page + 1 })}
-            >
-              Next
-            </button>
+            >{t("Next")}</button>
           </nav>
         </>
       )}
@@ -309,6 +297,7 @@ export function ProviderCatalog({
 }
 
 export function ProviderDirectory() {
+  const t = useText();
   const [data, setData] = useState<ProviderCatalogData | null>(null);
   const [search, setSearch] = useState("");
   const [error, setError] = useState("");
@@ -349,24 +338,22 @@ export function ProviderDirectory() {
       <label className="field-search">
         <Search size={18} />
         <input
-          aria-label="Search providers"
-          placeholder="Search providers"
+          aria-label={t("Search providers")}
+          placeholder={t("Search providers")}
           value={search}
           onChange={(event) => setSearch(event.target.value)}
         />
       </label>
       {error ? (
         <div className="panel provider-empty" role="alert">
-          <p>{error}</p>
+          <p>{t(error)}</p>
           <button
             className="secondary"
             onClick={() => setRetry((value) => value + 1)}
-          >
-            Try again
-          </button>
+          >{t("Try again")}</button>
         </div>
       ) : !data ? (
-        <p role="status">Loading providers…</p>
+        <p role="status">{t("Loading providers…")}</p>
       ) : collectionIsEmpty(data) ? (
         <CatalogAvailability
           data={data}
@@ -374,14 +361,13 @@ export function ProviderDirectory() {
         />
       ) : !providers.length ? (
         <div className="panel provider-empty">
-          <h2>No matching providers</h2>
+          <h2>{t("No matching providers")}</h2>
           <Link href="/casino">Explore all games</Link>
         </div>
       ) : (
         <>
           <p className="result-summary">
-            {providers.length}{" "}
-            {providers.length === 1 ? "provider" : "providers"}
+            {t("{count, plural, one {# provider} other {# providers}}", {count: providers.length})}
           </p>
           <div className="provider-directory">
             {providers.map(({ provider, total }) => (
@@ -393,7 +379,7 @@ export function ProviderDirectory() {
                 <Gamepad2 size={30} />
                 <strong>{provider}</strong>
                 <span>
-                  {total} {total === 1 ? "game" : "games"}
+                  {t("{count, plural, one {# game} other {# games}}", {count: total})}
                 </span>
               </Link>
             ))}

@@ -1,4 +1,5 @@
 "use client";
+import { useText } from "../../i18n/use-text";
 import Link from "next/link";
 import { ArrowLeft, CheckCircle2, Info, Search } from "lucide-react";
 
@@ -11,14 +12,14 @@ export function PageHeading({
   description?: string;
   eyebrow?: string;
 }) {
+  const t = useText();
   return (
     <div className="page-heading">
       <Link href="/" className="back-link">
-        <ArrowLeft size={14} /> Home
-      </Link>
-      <span className="eyebrow">{eyebrow}</span>
-      <h1>{title}</h1>
-      {description && <p>{description}</p>}
+        <ArrowLeft size={14} />{t("Home")}</Link>
+      <span className="eyebrow">{t(eyebrow)}</span>
+      <h1>{t(title)}</h1>
+      {description && <p>{t(description)}</p>}
     </div>
   );
 }
@@ -46,14 +47,13 @@ export function EmptyState({
   title?: string;
   children?: React.ReactNode;
 }) {
+  const t = useText();
   return (
     <div className="page-empty">
       <Search size={32} />
-      <h3>{title}</h3>
+      <h3>{t(title)}</h3>
       <p>{children}</p>
-      <Link href="/casino" className="secondary">
-        Explore games
-      </Link>
+      <Link href="/casino" className="secondary">{t("Explore games")}</Link>
     </div>
   );
 }

@@ -1,0 +1,16 @@
+.trigger[aria-expanded="true"] { border-color: #327ca7; }
+.trigger .chevron { flex-shrink: 0; margin-left: auto; width: 25px; height: 30px; padding: 4px; background: #00598b; border-radius: 5px; color: #fff; }
+.popup { position: fixed; inset: auto; margin: 0; width: 158px; max-width: calc(100vw - 16px); max-height: calc(100dvh - 16px); padding: 4px; border: 1px solid #2c405e; border-radius: 9px; background: #1d2643; color: #c5cbe0; box-shadow: 0 8px 24px #0006; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #3b5272 transparent; }
+.popup::backdrop { background: transparent; }
+.options { display: flex; flex-direction: column; gap: 2px; }
+.option { display: flex; align-items: center; justify-content: space-between; gap: 6px; width: 100%; min-height: 36px; padding: 8px 12px; border: 0; border-radius: 5px; background: transparent; color: inherit; font: inherit; font-size: 14px; line-height: 20px; text-align: left; cursor: pointer; }
+.option[aria-checked="true"] { background: #006bb5; color: #fff; }
+.option:hover { background: #28446a; color: #fff; }
+.option[aria-checked="true"]:hover { background: #087abe; }
+.option:focus-visible { outline: 2px solid #62cbff; outline-offset: -2px; color: #fff; }
+.option[aria-disabled="true"] { cursor: wait; opacity: .7; }
+.error { margin: 8px 8px 4px; color: #ffa4a4; font-size: 12px; line-height: 1.5; }
+.spinner { flex-shrink: 0; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (max-width: 1023px) { .option { min-height: 44px; } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }

@@ -23,7 +23,6 @@
 .drawer-item img { width: 28px; height: 28px; object-fit: contain; border-radius: 7px; background: #4a658532; padding: 2px; }
 .drawer-item.current { border-color: #3986b0; }
 .drawer-item svg { margin-left: auto; }
-.buy-crypto { justify-content: center; }
 .mobile-menu-dialog { display: none; }
 @media (max-width: 1023px) {
   .navigation-rail { display: none; }

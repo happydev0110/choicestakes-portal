@@ -1,4 +1,5 @@
 "use client";
+import { useText } from "../../i18n/use-text";
 
 import Link from "next/link";
 import { Coins, Plus } from "lucide-react";
@@ -14,6 +15,7 @@ export function BalanceControl({
   walletLink?: boolean;
   onDeposit?: () => void;
 }) {
+  const t = useText();
   const { player, loading } = usePlayer();
   const { wallet, error, liveUpdates } = useGameWallet();
   const { openWallet, request } = useWalletModal();
@@ -39,7 +41,7 @@ export function BalanceControl({
         {value}
       </span>
     )}
-    <button type="button" className={styles.addFunds} aria-label="Open deposit wallet" title="Deposit"
+    <button type="button" className={styles.addFunds} aria-label="Open deposit wallet" title={t("Deposit")}
       aria-haspopup="dialog" aria-expanded={Boolean(request)}
       onClick={(event) => { onDeposit?.(); openWallet(event.currentTarget); }}>
       <Plus size={23} strokeWidth={3} aria-hidden="true" />

@@ -1,4 +1,5 @@
 "use client";
+import { useText } from "../../i18n/use-text";
 import { useEffect, useRef, type Dispatch, type SetStateAction } from "react";
 import { Gamepad2 } from "lucide-react";
 import type { ProviderCatalogData } from "../lib/gaming";
@@ -40,6 +41,7 @@ export function CatalogAvailability({
   data: ProviderCatalogData;
   onRetry: () => void;
 }) {
+  const t = useText();
   const status = data.catalog?.status;
   const importing = status === "syncing";
   return (
@@ -59,9 +61,7 @@ export function CatalogAvailability({
             ? "There are currently no games available in this collection. Please check back later."
             : "We couldn’t load the collection yet. Please try again shortly."}
       </p>
-      <button className="secondary" onClick={onRetry}>
-        Refresh collection
-      </button>
+      <button className="secondary" onClick={onRetry}>{t("Refresh collection")}</button>
     </div>
   );
 }

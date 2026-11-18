@@ -1,4 +1,5 @@
 "use client";
+import { useText } from "../../i18n/use-text";
 
 import Link from "next/link";
 import { useRef } from "react";
@@ -43,18 +44,19 @@ function FooterGroup({
   onCookieSettings?: () => void;
   className?: string;
 }) {
+  const t = useText();
   return (
-    <section className={`${styles.group} ${className}`} aria-label={title}>
-      <h3>{title}</h3>
+    <section className={`${styles.group} ${className}`} aria-label={t(title)}>
+      <h3>{t(title)}</h3>
       <ul>
         {links.map(([label, href]) => (
-          <li key={label}>
+          <li key={t(label)}>
             {href === "cookies" ? (
               <button type="button" onClick={onCookieSettings}>
-                {label}
+                {t(label)}
               </button>
             ) : (
-              <Link href={href}>{label}</Link>
+              <Link href={href}>{t(label)}</Link>
             )}
           </li>
         ))}
@@ -68,6 +70,7 @@ export function SiteFooter({
 }: {
   onCookieSettings: () => void;
 }) {
+  const t = useText();
   const chat = useRef<HTMLDialogElement>(null);
   const closeChat = () => chat.current?.close();
   return (
@@ -81,10 +84,10 @@ export function SiteFooter({
       <div className={styles.top}>
         <nav className={styles.navigation} aria-label="Footer navigation">
           <div className={styles.casinoColumn}>
-            <FooterGroup title="Casino" links={casinoLinks} />
+            <FooterGroup title={t("Casino")} links={casinoLinks} />
             <FooterGroup
               className={styles.mobileGroup}
-              title="Promotions"
+              title={t("Promotions")}
               links={[
                 ["Promotions", "/promotions"],
                 ["Loyalty Tiers", "/loyalty-tiers"],
@@ -115,7 +118,7 @@ export function SiteFooter({
           </div>
           <FooterGroup
             className={styles.desktopGroup}
-            title="Promotions"
+            title={t("Promotions")}
             links={[
               ["Promotions", "/promotions"],
               ["Loyalty Tiers", "/loyalty-tiers"],
@@ -162,9 +165,9 @@ export function SiteFooter({
         >
           {badges.map(([label, image]) => (
             <img
-              key={label}
+              key={t(label)}
               src={asset(image)}
-              alt={label}
+              alt={t(label)}
               height={40}
               loading="lazy"
             />
@@ -213,9 +216,7 @@ export function SiteFooter({
             Live chat is not connected in this demo. Explore the support form or
             find an answer in our help center.
           </p>
-          <Link href="/contact" className="primary" onClick={closeChat}>
-            Contact support
-          </Link>
+          <Link href="/contact" className="primary" onClick={closeChat}>{t("Contact support")}</Link>
           <Link href="/faq" className={styles.faqLink} onClick={closeChat}>
             Browse FAQs
           </Link>

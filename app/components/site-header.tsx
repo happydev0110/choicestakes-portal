@@ -1,4 +1,5 @@
 "use client";
+import { useText } from "../../i18n/use-text";
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -18,6 +19,7 @@ const accountItems = [
 type Panel = "account" | "notifications" | null;
 
 export function SiteHeader() {
+  const t = useText();
   const { player, loading, logout } = usePlayer();
   const pathname = usePathname();
   const router = useRouter();
@@ -77,11 +79,11 @@ export function SiteHeader() {
     try {
       await logout(); setPanel(null); router.replace("/login"); router.refresh();
     } catch {
-      setLogoutError("Unable to log out. Please try again.");
+      setLogoutError(t("Unable to log out. Please try again."));
     } finally { logoutPending.current = false; setLoggingOut(false); }
   }
 
-  const name = player?.displayName.trim() || "My Account";
+  const name = player?.displayName.trim() || t("My Account");
   const initials = name.split(/\s+/).slice(0, 2).map((part) => Array.from(part)[0]).join("").toUpperCase();
 
   return (
@@ -91,37 +93,37 @@ export function SiteHeader() {
         <BalanceControl onDeposit={() => setPanel(null)} />
       </div>
       <div className={styles.actions}>
-        <Link className={`${styles.circle} ${styles.search}`} href="/search" aria-label="Search games"><Search size={18} /></Link>
-        {loading ? <span className={styles.skeleton} role="status" aria-label="Loading account" /> : player ? <>
+        <Link className={`${styles.circle} ${styles.search}`} href="/search" aria-label={t("Search games")}><Search size={18} /></Link>
+        {loading ? <span className={styles.skeleton} role="status" aria-label={t("Loading account")} /> : player ? <>
           <div className={styles.anchor}>
             <button ref={notificationButton} className={`${styles.circle} ${panel === "notifications" ? styles.selected : ""}`}
-              aria-label="Notifications" aria-expanded={panel === "notifications"} aria-controls="header-notifications" aria-haspopup="dialog"
+              aria-label={t("Notifications")} aria-expanded={panel === "notifications"} aria-controls="header-notifications" aria-haspopup="dialog"
               onClick={() => toggle("notifications")}><Bell size={20} /></button>
             {panel === "notifications" && <div ref={popup} id="header-notifications" className={`${styles.popup} ${styles.notifications}`}
               role="dialog" aria-labelledby="notifications-title" tabIndex={-1}>
-              <div className={styles.notificationHeading}><h2 id="notifications-title">Notifications</h2><button disabled>Mark All as Read</button></div>
-              <div className={styles.emptyNotifications}><Bell size={28} strokeWidth={1.5} /><p>No new notifications.</p></div>
+              <div className={styles.notificationHeading}><h2 id="notifications-title">{t("Notifications")}</h2><button disabled>{t("Mark All as Read")}</button></div>
+              <div className={styles.emptyNotifications}><Bell size={28} strokeWidth={1.5} /><p>{t("No new notifications.")}</p></div>
             </div>}
           </div>
           <div className={styles.anchor}>
             <button ref={accountButton} className={`${styles.profile} ${panel === "account" ? styles.selected : ""}`}
-              aria-label={`Account menu for ${name}`} aria-expanded={panel === "account"} aria-controls="header-account-menu" aria-haspopup="menu"
+              aria-label={t("Account menu for {name}", {name})} aria-expanded={panel === "account"} aria-controls="header-account-menu" aria-haspopup="menu"
               onClick={() => toggle("account")} onKeyDown={(event) => { if (event.key === "ArrowDown") { event.preventDefault(); setPanel("account"); } }}>
               <span className={styles.avatar} aria-hidden="true">{initials}</span><span className={styles.username}>{name}</span>
             </button>
             {panel === "account" && <div ref={popup} id="header-account-menu" className={`${styles.popup} ${styles.accountMenu}`}
-              role="menu" aria-label="Account" onKeyDown={menuKeys}>
+              role="menu" aria-label={t("Account")} onKeyDown={menuKeys}>
               {accountItems.map(({ label, href, icon: Icon }) => <Link key={href} role="menuitem" className={styles.menuItem} href={href} onClick={() => setPanel(null)}>
-                <span className={styles.menuIcon}><Icon size={18} /></span>{label}
+                <span className={styles.menuIcon}><Icon size={18} /></span>{t(label)}
               </Link>)}
               <div className={styles.divider} role="separator" />
               <button className={`${styles.menuItem} ${styles.logout}`} role="menuitem" onClick={logOut} disabled={loggingOut}>
-                <span className={styles.menuIcon}><LogOut size={18} /></span>{loggingOut ? "Logging out…" : "Log Out"}
+                <span className={styles.menuIcon}><LogOut size={18} /></span>{t(loggingOut ? "Logging out…" : "Log Out")}
               </button>
               {logoutError && <p className={styles.error} role="alert">{logoutError}</p>}
             </div>}
           </div>
-        </> : <><Link className="login" href="/login">Log In</Link><Link className="primary" href="/register">Join Now</Link></>}
+        </> : <><Link className="login" href="/login">{t("Log In")}</Link><Link className="primary" href="/register">{t("Join Now")}</Link></>}
       </div>
     </header>
   );

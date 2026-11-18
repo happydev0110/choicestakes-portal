@@ -1,4 +1,5 @@
 "use client";
+import { useText } from "../../i18n/use-text";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -14,6 +15,7 @@ export function GameShell({ children, returnHref, showBalance = false }: {
   returnHref: string;
   showBalance?: boolean;
 }) {
+  const t = useText();
   const router = useRouter();
   const { openWallet, request } = useWalletModal();
   const container = useRef<HTMLDivElement>(null);
@@ -64,12 +66,12 @@ export function GameShell({ children, returnHref, showBalance = false }: {
     router.push(href);
   }
 
-  const fullscreenLabel = fullscreen ? "Exit fullscreen" : "Enter fullscreen";
+  const fullscreenLabel = t(fullscreen ? "Exit fullscreen" : "Enter fullscreen");
 
   return (
     <div className={styles.shell} ref={container}>
       <a className="skip-link" href="#main-content">Skip to game</a>
-      <header className={styles.header} aria-label="Game controls">
+      <header className={styles.header} aria-label={t("Game controls")}>
         <Link href="/" className={styles.brand} aria-label="Choicestakes home"
           onNavigate={(event) => { event.preventDefault(); void leave("/"); }}>
           <BrandLogo />
@@ -77,7 +79,7 @@ export function GameShell({ children, returnHref, showBalance = false }: {
         <div className={styles.center}>
           {showBalance ? <BalanceControl walletLink={false} /> : (
             <button type="button" className={styles.wallet} aria-haspopup="dialog" aria-expanded={Boolean(request)}
-              onClick={(event) => openWallet(event.currentTarget)}>Deposit</button>
+              onClick={(event) => openWallet(event.currentTarget)}>{t("Deposit")}</button>
           )}
         </div>
         <div className={styles.controls}>
@@ -88,7 +90,7 @@ export function GameShell({ children, returnHref, showBalance = false }: {
             {fullscreen ? <Minimize size={18} aria-hidden="true" /> : <Maximize size={18} aria-hidden="true" />}
           </button>
           <Link href={returnHref} className={styles.iconButton}
-            aria-label="Close game" title="Close game"
+            aria-label={t("Close game")} title={t("Close game")}
             onNavigate={(event) => { event.preventDefault(); void leave(returnHref); }}>
             <X size={20} aria-hidden="true" />
           </Link>

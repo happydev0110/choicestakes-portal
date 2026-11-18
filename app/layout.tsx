@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale } from "next-intl/server";
 import "./globals.css";
 import "./screens/screens.css";
 import { SiteShell } from "./components/site-shell";
@@ -12,13 +14,16 @@ export const metadata: Metadata = {
     "Choicestakes casino and sportsbook. Explore games from our connected providers.",
   robots: { index: false, follow: false },
 };
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const locale = await getLocale();
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    <html lang={locale === "zh" ? "zh-Hans" : locale} data-scroll-behavior="smooth">
       <body>
+        <NextIntlClientProvider>
         <ToastProvider><PlayerAuthProvider><GameWalletProvider><WalletModalProvider><SiteShell>{children}</SiteShell></WalletModalProvider></GameWalletProvider></PlayerAuthProvider></ToastProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
