@@ -59,7 +59,13 @@
   min-width: 0;
 }
 .provider-game-card .catalog-card {
+  display: block;
   height: 100%;
+  border-radius: 11px;
+}
+.provider-game-card .catalog-card:focus-visible {
+  outline: 2px solid #5ecbff;
+  outline-offset: -2px;
 }
 .provider-game-card .catalog-art {
   aspect-ratio: 3 / 4;

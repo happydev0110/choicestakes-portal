@@ -1,6 +1,9 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { A11y } from "swiper/modules";
+import type { Swiper as SwiperInstance } from "swiper";
 import {
   ChevronLeft,
   ChevronRight,
@@ -20,6 +23,8 @@ import {
   collectionIsEmpty,
   usePendingCatalogRefresh,
 } from "./catalog-availability";
+import "swiper/css";
+import "swiper/css/a11y";
 import "./provider-games.css";
 import "./casino.css";
 
@@ -67,32 +72,22 @@ function CasinoRow({
   pending?: boolean;
   unavailable?: boolean;
 }) {
-  const track = useRef<HTMLDivElement>(null);
-  const [canScroll, setCanScroll] = useState({ left: false, right: false });
-  function updateScroll() {
-    const node = track.current;
-    if (node)
-      setCanScroll({
-        left: node.scrollLeft > 1,
-        right: node.scrollLeft + node.clientWidth < node.scrollWidth - 2,
-      });
-  }
-  useEffect(() => {
-    const node = track.current;
-    if (!node) return;
-    updateScroll();
-    const observer = new ResizeObserver(updateScroll);
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [games, pending]);
-  function scroll(direction: number) {
-    const node = track.current;
-    node?.scrollBy({
-      left: direction * node.clientWidth * 0.8,
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "instant"
-        : "smooth",
+  const slider = useRef<SwiperInstance | null>(null);
+  const [canSlide, setCanSlide] = useState({ left: false, right: false });
+  function updateNavigation(instance: SwiperInstance) {
+    setCanSlide({
+      left: !instance.isLocked && !instance.isBeginning,
+      right: !instance.isLocked && !instance.isEnd,
     });
+  }
+  function slide(direction: "previous" | "next") {
+    const instance = slider.current;
+    if (!instance || instance.destroyed) return;
+    const speed = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? 0
+      : 350;
+    if (direction === "previous") instance.slidePrev(speed);
+    else instance.slideNext(speed);
   }
   return (
     <section
@@ -116,39 +111,68 @@ function CasinoRow({
           )}
           <button
             aria-label={`Previous ${title}`}
-            disabled={!canScroll.left || pending}
-            onClick={() => scroll(-1)}
+            aria-controls={pending || games.length ? `casino-${category}-slider` : undefined}
+            disabled={!canSlide.left || pending || !games.length}
+            onClick={() => slide("previous")}
           >
             <ChevronLeft size={16} />
           </button>
           <button
             aria-label={`Next ${title}`}
-            disabled={!canScroll.right || pending}
-            onClick={() => scroll(1)}
+            aria-controls={pending || games.length ? `casino-${category}-slider` : undefined}
+            disabled={!canSlide.right || pending || !games.length}
+            onClick={() => slide("next")}
           >
             <ChevronRight size={16} />
           </button>
         </div>
       </div>
-      {pending || games.length ? (
+      {pending ? (
         <div
-          className="casino-provider-track"
-          ref={track}
-          onScroll={updateScroll}
-          aria-busy={pending}
+          id={`casino-${category}-slider`}
+          className="casino-row-skeletons"
+          role="status"
+          aria-label={`Loading ${title}`}
         >
-          {pending
-            ? Array.from({ length: 12 }, (_, index) => (
-                <div
-                  className="casino-card-skeleton"
-                  key={index}
-                  aria-hidden="true"
-                />
-              ))
-            : games.map((game) => (
-                <ProviderGameCard key={game.uuid} game={game} />
-              ))}
+          {Array.from({ length: 12 }, (_, index) => (
+            <div className="casino-card-skeleton" key={index} aria-hidden="true" />
+          ))}
         </div>
+      ) : games.length ? (
+        <Swiper
+          id={`casino-${category}-slider`}
+          className="casino-game-swiper casino-provider-track"
+          modules={[A11y]}
+          slidesPerView="auto"
+          slidesPerGroupAuto
+          spaceBetween={11}
+          breakpoints={{ 1024: { spaceBetween: 22 } }}
+          speed={350}
+          grabCursor
+          watchOverflow
+          watchSlidesProgress
+          a11y={{
+            containerMessage: title,
+            containerRoleDescriptionMessage: "carousel",
+            itemRoleDescriptionMessage: "slide",
+          }}
+          onSwiper={(instance) => {
+            slider.current = instance;
+            updateNavigation(instance);
+          }}
+          onSlideChange={updateNavigation}
+          onSlidesUpdated={updateNavigation}
+          onResize={updateNavigation}
+          onLock={updateNavigation}
+          onUnlock={updateNavigation}
+          onBeforeDestroy={() => { slider.current = null; }}
+        >
+          {games.map((game) => (
+            <SwiperSlide key={game.uuid}>
+              <ProviderGameCard game={game} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       ) : (
         <p className="casino-category-empty">
           {unavailable ? "This collection is temporarily unavailable." : "No games available in this category yet."}{" "}

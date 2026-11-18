@@ -358,37 +358,21 @@
   color: #63d7f2;
 }
 .casino-provider-track {
+  padding: 2px 0;
+}
+.casino-row-skeletons {
   display: flex;
   gap: 22px;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
-  scrollbar-color: #294966 transparent;
-  padding-bottom: 10px;
+  overflow: hidden;
+  padding: 2px 0;
 }
 .casino-provider-track .provider-game-card {
-  flex: 0 0 124.8px;
-  min-width: 0;
-  scroll-snap-align: start;
+  height: 100%;
 }
 .casino-provider-track .catalog-art {
   height: 166px;
   aspect-ratio: auto;
   border-radius: 10px;
-}
-.casino-provider-track .catalog-card strong {
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin-top: 7px;
-  font-size: 11px;
-}
-.casino-provider-track .catalog-card small {
-  display: block;
-  font-size: 10px;
-  color: #91a9c3;
 }
 .casino-provider-track .provider-favorite {
   top: 5px;
@@ -441,7 +425,7 @@
   margin-bottom: 20px;
 }
 @media (max-width: 1023px) {
-  .casino-provider-track {
+  .casino-row-skeletons {
     gap: 11px;
   }
   .casino-provider-filter {

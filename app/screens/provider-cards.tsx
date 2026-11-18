@@ -112,6 +112,7 @@ export function ProviderArtwork({ game }: { game: ProviderGame }) {
       src={game.imageUrl}
       alt=""
       loading="lazy"
+      draggable={false}
       referrerPolicy="no-referrer"
       onError={() => setFailed(true)}
     />
@@ -122,15 +123,19 @@ export function ProviderArtwork({ game }: { game: ProviderGame }) {
 export function ProviderGameCard({ game }: { game: ProviderGame }) {
   return (
     <article className="provider-game-card">
-      <Link className="catalog-card" href={`/play/${game.uuid}`} prefetch={false}>
+      <Link
+        className="catalog-card"
+        href={`/play/${game.uuid}`}
+        prefetch={false}
+        draggable={false}
+        aria-label={`Play ${game.name} by ${game.provider}`}
+      >
         <div className="catalog-art provider-art">
           <ProviderArtwork game={game} />
-          <span className="catalog-play">
+          <span className="catalog-play" aria-hidden="true">
             <Play size={28} />
           </span>
         </div>
-        <strong>{game.name}</strong>
-        <small>{game.provider}</small>
       </Link>
       <FavoriteButton game={game} compact />
     </article>
