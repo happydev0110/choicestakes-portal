@@ -2,6 +2,7 @@ export const languages = [
   { code: "en", name: "English", label: "English" },
   { code: "ja", name: "日本語", label: "Japanese" },
   { code: "es", name: "Español", label: "Spanish" },
+  { code: "fr", name: "Français", label: "French" },
   { code: "ko", name: "한국어", label: "Korean" },
   { code: "pt", name: "Português", label: "Portuguese" },
   { code: "ro", name: "Română", label: "Romanian" },
