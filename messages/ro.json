@@ -1,5 +1,14 @@
 {
   "ui": {
+    "partnerLoading": "Se încarcă ofertele partenerilor…",
+    "partnerUnavailable": "Ofertele partenerilor sunt temporar indisponibile.",
+    "partnerLoadMore": "Încarcă mai multe oferte",
+    "partnerOffers": "Oferte de la parteneri",
+    "partnerAffiliateLink": "Link de afiliere",
+    "partnerOfferDescription": "Vezi această ofertă pe site-ul Walmart.",
+    "partnerViewOffer": "Vezi oferta",
+    "partnerOpensNewTab": "Se deschide într-o filă nouă",
+    "partnerDisclosure": "Putem primi un comision pentru achizițiile făcute prin acest link.",
     "language": "Limbă",
     "chooseLanguage": "Alege limba",
     "languageHint": "Alegerea este salvată pe acest dispozitiv și folosită în sesiunile noi compatibile.",

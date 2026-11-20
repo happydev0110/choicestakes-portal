@@ -1,5 +1,14 @@
 {
   "ui": {
+    "partnerLoading": "正在加载合作伙伴优惠…",
+    "partnerUnavailable": "合作伙伴优惠暂时不可用。",
+    "partnerLoadMore": "加载更多优惠",
+    "partnerOffers": "合作伙伴优惠",
+    "partnerAffiliateLink": "推广链接",
+    "partnerOfferDescription": "前往 Walmart 网站查看此优惠。",
+    "partnerViewOffer": "查看优惠",
+    "partnerOpensNewTab": "在新标签页中打开",
+    "partnerDisclosure": "通过此链接购买商品，我们可能会获得佣金。",
     "language": "语言",
     "chooseLanguage": "选择语言",
     "languageHint": "您的选择将保存在此设备上，并用于支持该语言的新游戏会话。",

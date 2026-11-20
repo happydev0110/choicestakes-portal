@@ -1,5 +1,14 @@
 {
   "ui": {
+    "partnerLoading": "Caricamento delle offerte dei partner…",
+    "partnerUnavailable": "Le offerte dei partner sono temporaneamente non disponibili.",
+    "partnerLoadMore": "Carica altre offerte",
+    "partnerOffers": "Offerte dei partner",
+    "partnerAffiliateLink": "Link di affiliazione",
+    "partnerOfferDescription": "Scopri questa offerta sul sito di Walmart.",
+    "partnerViewOffer": "Vedi offerta",
+    "partnerOpensNewTab": "Si apre in una nuova scheda",
+    "partnerDisclosure": "Potremmo ricevere una commissione sugli acquisti effettuati tramite questo link.",
     "language": "Lingua",
     "chooseLanguage": "Scegli la lingua",
     "languageHint": "La scelta viene salvata su questo dispositivo e usata nelle nuove sessioni compatibili.",

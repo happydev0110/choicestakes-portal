@@ -1,5 +1,14 @@
 {
   "ui": {
+    "partnerLoading": "Loading partner offers…",
+    "partnerUnavailable": "Partner offers are temporarily unavailable.",
+    "partnerLoadMore": "Load more offers",
+    "partnerOffers": "Partner Offers",
+    "partnerAffiliateLink": "Affiliate link",
+    "partnerOfferDescription": "View this offer on Walmart’s website.",
+    "partnerViewOffer": "View offer",
+    "partnerOpensNewTab": "Opens in a new tab",
+    "partnerDisclosure": "We may earn a commission from purchases through this link.",
     "language": "Language",
     "chooseLanguage": "Choose your language",
     "languageHint": "Your choice is saved on this device and used for new game sessions where supported.",

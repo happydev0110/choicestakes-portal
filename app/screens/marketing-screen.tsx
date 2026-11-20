@@ -14,6 +14,7 @@ import {
 import { asset } from "../data";
 import { promotionOffers } from "../site-map";
 import { Notice, PageHeading } from "./shared";
+import { PartnerOffers } from "../components/partner-offers";
 
 export function PromotionsScreen() {
   const [filter, setFilter] = useState("All");
@@ -30,6 +31,7 @@ export function PromotionsScreen() {
         </div>
         <img src={asset("promotions.2684d026.png")} alt="Gift box" />
       </div>
+      <PartnerOffers />
       <div className="cashback-callout">
         <Gift size={35} />
         <div>
@@ -97,8 +99,8 @@ export function PromotionsScreen() {
         </div>
       )}
       <Notice>
-        Promotions are design samples. No offer can be claimed and no deposit is
-        accepted.
+        Casino and sports promotions are design samples. No gaming bonus can be
+        claimed and no deposit is accepted.
       </Notice>
     </div>
   );

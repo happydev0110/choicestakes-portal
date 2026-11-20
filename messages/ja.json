@@ -1,5 +1,14 @@
 {
   "ui": {
+    "partnerLoading": "パートナー特典を読み込み中…",
+    "partnerUnavailable": "パートナー特典は現在ご利用いただけません。",
+    "partnerLoadMore": "さらに表示",
+    "partnerOffers": "パートナー特典",
+    "partnerAffiliateLink": "アフィリエイトリンク",
+    "partnerOfferDescription": "Walmartのウェブサイトで詳細をご覧ください。",
+    "partnerViewOffer": "詳細を見る",
+    "partnerOpensNewTab": "新しいタブで開きます",
+    "partnerDisclosure": "このリンクから購入すると、当サイトが紹介料を受け取る場合があります。",
     "language": "言語",
     "chooseLanguage": "言語を選択",
     "languageHint": "選択はこの端末に保存され、対応するゲームの新しいセッションに適用されます。",
