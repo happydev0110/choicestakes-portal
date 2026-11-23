@@ -1,5 +1,6 @@
 {
   "ui": {
+    "loadMoreGames": "Afficher plus de jeux",
     "partnerLoading": "Chargement des offres partenaires…",
     "partnerUnavailable": "Les offres partenaires sont temporairement indisponibles.",
     "partnerLoadMore": "Afficher plus d’offres",

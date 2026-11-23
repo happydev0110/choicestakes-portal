@@ -1,5 +1,6 @@
 {
   "ui": {
+    "loadMoreGames": "Load more games",
     "partnerLoading": "Loading partner offers…",
     "partnerUnavailable": "Partner offers are temporarily unavailable.",
     "partnerLoadMore": "Load more offers",

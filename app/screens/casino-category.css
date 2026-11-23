@@ -1,0 +1,29 @@
+.casino-category-page { min-width: 0; margin: 0 -12px 28px; }
+.casino-category-page .hero-carousel { margin: 0; }
+.casino-category-page .casino-search { margin: 12px 0 20px; }
+.casino-category-page .casino-search input::-webkit-search-cancel-button { display: none; }
+.casino-category-page .casino-category-nav { padding: 0; }
+.casino-category-page .catalog-grid { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 16px 10px; }
+.casino-category-results { min-height: 320px; }
+.category-load-more { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 28px 0 8px; }
+.category-load-more button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 180px; min-height: 44px; }
+.category-load-more button:disabled { cursor: wait; opacity: .65; }
+.category-load-more p { color: #ffb5be; }
+.category-skeleton { aspect-ratio: 3 / 4; border: 1px solid #293d59; border-radius: 11px; background: linear-gradient(115deg, #15253c, #203955, #15253c); background-size: 220% 100%; animation: category-shimmer 1.6s linear infinite; }
+.category-loading-icon { animation: category-spin 1s linear infinite; }
+@keyframes category-shimmer { to { background-position: -220% 0; } }
+@keyframes category-spin { to { transform: rotate(360deg); } }
+@media (max-width: 1199px) { .casino-category-page .catalog-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+@media (max-width: 1023px) {
+  .casino-category-page { margin: 0 0 24px; }
+  .casino-category-page .casino-category-nav { justify-content: flex-start; }
+}
+@media (max-width: 767px) { .casino-category-page .catalog-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 639px) {
+  .casino-category-page .catalog-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 8px; }
+  .casino-category-page .casino-search { margin: 4px 0 14px; }
+  .casino-category-page .casino-category-nav { margin-bottom: 16px; }
+  .casino-category-page .provider-favorite { top: 4px; right: 4px; }
+  .casino-category-page .provider-favorite button { padding: 6px; }
+}
+@media (prefers-reduced-motion: reduce) { .category-skeleton, .category-loading-icon { animation: none; } }

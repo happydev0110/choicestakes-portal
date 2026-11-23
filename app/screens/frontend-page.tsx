@@ -1,6 +1,7 @@
 "use client";
 import { type PageDefinition } from "../site-map";
-import { ProviderCatalog, ProviderDirectory } from "./provider-catalog";
+import { ProviderDirectory } from "./provider-catalog";
+import { CasinoCategory } from "./casino-category";
 import { CasinoLobby } from "./casino-lobby";
 import {
   AffiliateScreen,
@@ -23,7 +24,7 @@ export function FrontendPage({
     case "casino":
       return <CasinoLobby />;
     case "catalog":
-      return <ProviderCatalog key={pageKey} title={definition.title} category={["search", "all-games"].includes(pageKey) ? "" : pageKey} />;
+      return <CasinoCategory key={pageKey} title={definition.title} category={["search", "all-games"].includes(pageKey) ? "" : pageKey} />;
     case "providers":
       return <ProviderDirectory />;
     case "promotions":

@@ -1,5 +1,6 @@
 {
   "ui": {
+    "loadMoreGames": "ゲームをもっと表示",
     "partnerLoading": "パートナー特典を読み込み中…",
     "partnerUnavailable": "パートナー特典は現在ご利用いただけません。",
     "partnerLoadMore": "さらに表示",
