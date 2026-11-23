@@ -1,5 +1,10 @@
 {
   "ui": {
+    "blackjack": "Blackjack",
+    "baccarat": "Bacará",
+    "bingo": "Bingo",
+    "previousCategories": "Categorias anteriores",
+    "moreCategories": "Mais categorias",
     "loadMoreGames": "Carregar mais jogos",
     "partnerLoading": "A carregar ofertas de parceiros…",
     "partnerUnavailable": "As ofertas de parceiros estão temporariamente indisponíveis.",

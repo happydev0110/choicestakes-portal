@@ -22,7 +22,7 @@
 @media (max-width: 639px) {
   .casino-category-page .catalog-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 8px; }
   .casino-category-page .casino-search { margin: 4px 0 14px; }
-  .casino-category-page .casino-category-nav { margin-bottom: 16px; }
+  .casino-category-page .casino-category-bar { margin-bottom: 16px; }
   .casino-category-page .provider-favorite { top: 4px; right: 4px; }
   .casino-category-page .provider-favorite button { padding: 6px; }
 }

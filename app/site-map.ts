@@ -1,4 +1,4 @@
-
+import { casinoCategories } from "./lib/casino-categories";
 
 export type PageKind =
   | "casino"
@@ -31,13 +31,7 @@ export const categoryLinks = [
   ["All Games", "/all-games"],
   ["Featured Games", "/featured"],
   ["New Games", "/new-games"],
-  ["Slots", "/slots"],
-  ["Live Casino", "/live"],
-  ["Crash & Instant", "/crash-instant"],
-  ["Table & Cards", "/table-cards"],
-  ["Lotto & Scratch", "/lotto-scratch"],
-  ["Roulette", "/roulette"],
-  ["Poker", "/poker"],
+  ...casinoCategories.map(({ title, category }) => [title, `/${category}`]),
 ];
 export const policyLinks = [
   ["Terms & Legal", "terms-of-service"],
@@ -171,3 +165,4 @@ export const labelRoutes: Record<string, string> = {
   "Game Providers": "/providers",
 };
 for (const [title, slug] of policyLinks) labelRoutes[title] = `/terms/${slug}`;
+for (const [title, path] of categoryLinks) labelRoutes[title] = path;

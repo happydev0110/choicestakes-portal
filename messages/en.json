@@ -1,5 +1,10 @@
 {
   "ui": {
+    "blackjack": "Blackjack",
+    "baccarat": "Baccarat",
+    "bingo": "Bingo",
+    "previousCategories": "Previous categories",
+    "moreCategories": "More categories",
     "loadMoreGames": "Load more games",
     "partnerLoading": "Loading partner offers…",
     "partnerUnavailable": "Partner offers are temporarily unavailable.",

@@ -35,8 +35,6 @@ const rows = [
   { category: "featured", title: "Featured Games", icon: "" },
   ...categories,
   { category: "new-games", title: "New Games", icon: "" },
-  { category: "roulette", title: "Roulette", icon: "" },
-  { category: "poker", title: "Poker", icon: "" },
 ];
 
 function CasinoRow({
@@ -296,7 +294,7 @@ export function CasinoLobby({
           ))}
         </select>
       </div>
-      <CasinoCategoryNav />
+      <CasinoCategoryNav counts={data?.categoryCounts ?? data?.sections} />
       <div className="casino-collection-info">
         <span>
           {data ? t("{count, plural, one {# game} other {# games}}", {count: data.total}) : t("Game collection")}
@@ -403,10 +401,7 @@ export function CasinoLobby({
             const section = data?.sections.find(
               (item) => item.category === row.category,
             );
-            if (
-              ["featured", "new-games"].includes(row.category) &&
-              !section?.total
-            )
+            if (data && !section?.total)
               return null;
             return (
               <CasinoRow

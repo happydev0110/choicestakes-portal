@@ -1,5 +1,10 @@
 {
   "ui": {
+    "blackjack": "二十一点",
+    "baccarat": "百家乐",
+    "bingo": "宾果游戏",
+    "previousCategories": "上一组分类",
+    "moreCategories": "更多分类",
     "loadMoreGames": "加载更多游戏",
     "partnerLoading": "正在加载合作伙伴优惠…",
     "partnerUnavailable": "合作伙伴优惠暂时不可用。",

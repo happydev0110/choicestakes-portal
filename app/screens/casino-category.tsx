@@ -20,6 +20,7 @@ export function CasinoCategory({ title, category }: { title: string; category: s
   const [search, setSearch] = useState("");
   const [initialized, setInitialized] = useState(false);
   const [data, setData] = useState<ProviderCatalogData | null>(null);
+  const [categoryCounts, setCategoryCounts] = useState<ProviderCatalogData["categoryCounts"]>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [retry, setRetry] = useState(0);
@@ -60,7 +61,12 @@ export function CasinoCategory({ title, category }: { title: string; category: s
     const timer = setTimeout(() => {
       const query = new URLSearchParams({ category, search: search.trim(), page: "1" });
       gamingRequest<ProviderCatalogData>(`games?${query}`, undefined, controller.signal)
-        .then((result) => { if (!controller.signal.aborted) setData(result); })
+        .then((result) => {
+          if (!controller.signal.aborted) {
+            setData(result);
+            setCategoryCounts(result.categoryCounts);
+          }
+        })
         .catch(() => { if (!controller.signal.aborted) setError("Unable to load games."); })
         .finally(() => { if (!controller.signal.aborted) setLoading(false); });
     }, search ? 250 : 0);
@@ -105,7 +111,7 @@ export function CasinoCategory({ title, category }: { title: string; category: s
         <input type="search" aria-label={t("Search games")} placeholder={t("Search games")} value={search} maxLength={100} onChange={(event) => updateSearch(event.target.value)} />
         {search && <button type="button" aria-label={t("Clear search")} onClick={() => updateSearch("")}><X size={18} /></button>}
       </label>
-      <CasinoCategoryNav active={category} />
+      <CasinoCategoryNav active={category} counts={categoryCounts} />
       <div className="casino-category-results" aria-busy={loading}>
         {error ? (
           <div className="panel provider-empty" role="alert">

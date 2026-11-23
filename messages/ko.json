@@ -1,5 +1,10 @@
 {
   "ui": {
+    "blackjack": "블랙잭",
+    "baccarat": "바카라",
+    "bingo": "빙고",
+    "previousCategories": "이전 카테고리",
+    "moreCategories": "더 많은 카테고리",
     "loadMoreGames": "게임 더 보기",
     "partnerLoading": "제휴 혜택 불러오는 중…",
     "partnerUnavailable": "현재 제휴 혜택을 이용할 수 없습니다.",
