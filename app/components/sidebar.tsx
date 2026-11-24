@@ -35,7 +35,7 @@ function MenuContents({ active, onChoose, mobile = false, available, languageMen
   return <div className="navigation-content">
     <div className="navigation-tabs">{railItems.slice(0, 2).map(([name, image]) => <button key={name} className={active === name || (active === 'Home' && name === 'Casino') ? 'selected' : ''} onClick={() => onChoose(name)}><img src={asset(image)} alt=""/>{t(name)}</button>)}</div>
     {mobile && language}
-    <div className="navigation-featured">{[['Live Casino', 'live-casino-element.d7c46a6f.webp'], ['Slots', 'slots-machine.d48b1a72.webp']].map(([name, image]) => <button className="drawer-feature" key={name} onClick={() => onChoose(name)}><span>{t(name)}</span><img src={asset(image)} alt=""/></button>)}</div>
+    <div className="navigation-featured">{[['Live Casino', 'live-casino-element.d7c46a6f.webp'], ['Slots', 'slots-machine.d48b1a72.webp']].map(([name, image]) => <button className={`drawer-feature ${active === name ? 'current' : ''}`} aria-current={active === name ? 'page' : undefined} key={name} onClick={() => onChoose(name)}><span>{t(name)}</span><img src={asset(image)} alt=""/></button>)}</div>
     <div className="navigation-links">{drawerItems.map(([name, image]) => <button className={`drawer-item ${active === name ? 'current' : ''}`} key={name} onClick={() => onChoose(name)}><img src={asset(image)} alt=""/><span>{t(name)}</span></button>)}</div>
     {!mobile && language}
   </div>;
