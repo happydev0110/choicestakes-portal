@@ -6,11 +6,9 @@ import { CasinoLobby } from "./casino-lobby";
 import {
   AffiliateScreen,
   CryptoScreen,
-  LoyaltyScreen,
-  PromotionScreen,
-  PromotionsScreen,
   ReferralScreen,
 } from "./marketing-screen";
+import { LoyaltyScreen } from "./loyalty-screen";
 import { ContactScreen, FaqScreen, PolicyScreen } from "./support-screen";
 import { AuthScreen } from "./auth-screen";
 export function FrontendPage({
@@ -27,10 +25,6 @@ export function FrontendPage({
       return <CasinoCategory key={pageKey} title={definition.title} category={["search", "all-games"].includes(pageKey) ? "" : pageKey} />;
     case "providers":
       return <ProviderDirectory />;
-    case "promotions":
-      return <PromotionsScreen />;
-    case "promotion":
-      return <PromotionScreen pageKey={pageKey} />;
     case "loyalty":
       return <LoyaltyScreen />;
     case "affiliate":

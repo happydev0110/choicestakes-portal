@@ -14,7 +14,7 @@ const request = (path, init = {}) => fetch(new URL(path, origin), {
 });
 
 test('production routing serves known pages/assets and rejects unknown paths', options, async () => {
-  for (const path of ['/login', '/register', '/promotions']) {
+  for (const path of ['/login', '/register', '/loyalty-tiers']) {
     const response = await request(path);
     assert.equal(response.status, 200, path);
     const html = await response.text();
@@ -25,7 +25,7 @@ test('production routing serves known pages/assets and rejects unknown paths', o
       assert.equal((await request(asset[1])).status, 200);
     }
   }
-  for (const path of ['/not-a-portal-page', '/' + 'z'.repeat(300), '/_next/static/chunks/missing.js']) {
+  for (const path of ['/promotions', '/promotions/first-deposit', '/promotions/second-deposit', '/promotions/third-deposit', '/api/partner-offers', '/not-a-portal-page', '/' + 'z'.repeat(300), '/_next/static/chunks/missing.js']) {
     assert.equal((await request(path)).status, 404, path);
   }
   const protectedPage = await request('/sports');

@@ -18,7 +18,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { ProviderCatalog } from "./provider-catalog";
-import { accountLinks, promotionOffers } from "../site-map";
+import { accountLinks } from "../site-map";
 import {
   EmptyState,
   Notice,
@@ -386,20 +386,6 @@ function Bonuses() {
           Sample wagering progress · 32% · No live bonus activity
         </p>
       </section>
-      <div className="bonus-list">
-        {promotionOffers.map((o) => (
-          <section className="panel" key={o.slug}>
-            <Gift size={30} />
-            <div>
-              <h3>{o.title}</h3>
-              <p>100% up to {o.amount} · Sample welcome offer</p>
-            </div>
-            <Link href={`/promotions/${o.slug}`} className="secondary">
-              View details
-            </Link>
-          </section>
-        ))}
-      </div>
     </>
   );
 }

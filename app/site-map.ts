@@ -4,8 +4,6 @@ export type PageKind =
   | "casino"
   | "catalog"
   | "providers"
-  | "promotions"
-  | "promotion"
   | "loyalty"
   | "affiliate"
   | "referral"
@@ -57,29 +55,6 @@ export const accountLinks = [
   ["Verification", "/account/verification"],
   ["Play Limits", "/account/responsible-gaming"],
 ];
-export const promotionOffers = [
-  {
-    slug: "first-deposit",
-    title: "First deposit welcome bonus",
-    amount: "$300",
-    number: "01",
-    image: "hero-banner-newgames.1df48699.jpg",
-  },
-  {
-    slug: "second-deposit",
-    title: "Second deposit welcome bonus",
-    amount: "$300",
-    number: "02",
-    image: "hero-banner-wallet.306b8026.jpg",
-  },
-  {
-    slug: "third-deposit",
-    title: "Third deposit welcome bonus",
-    amount: "$400",
-    number: "03",
-    image: "hero-banner-aviator.1b5c4827.jpg",
-  },
-];
 export const pageDefinitions: Record<string, PageDefinition> = {
   casino: { title: "Online Casino", kind: "casino" },
   "new-games": { title: "New Games", kind: "catalog" },
@@ -104,7 +79,6 @@ export const pageDefinitions: Record<string, PageDefinition> = {
   poker: { title: "Poker", kind: "catalog", category: "Poker" },
   search: { title: "Search Games", kind: "catalog" },
   providers: { title: "Game Providers", kind: "providers" },
-  promotions: { title: "Bonus Offers", kind: "promotions" },
   "loyalty-tiers": { title: "Loyalty Tiers", kind: "loyalty" },
   affiliates: { title: "Choicestakes Partners", kind: "affiliate" },
   "refer-a-friend": { title: "Refer a Friend", kind: "referral" },
@@ -126,11 +100,6 @@ for (const [title, path] of accountLinks)
     title: title === "Overview" ? "My Account" : title,
     kind: "account",
   };
-for (const offer of promotionOffers)
-  pageDefinitions[`promotions/${offer.slug}`] = {
-    title: offer.title,
-    kind: "promotion",
-  };
 export const labelRoutes: Record<string, string> = {
   Home: "/",
   Casino: "/casino",
@@ -148,7 +117,6 @@ export const labelRoutes: Record<string, string> = {
   Poker: "/poker",
   Sports: "/sports",
   Sportsbook: "/sports",
-  Promotions: "/promotions",
   "Loyalty Tiers": "/loyalty-tiers",
   Affiliate: "/affiliates",
   "Crypto Payments": "/buy-crypto",

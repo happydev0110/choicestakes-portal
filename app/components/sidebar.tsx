@@ -12,14 +12,14 @@ import { LanguageMenu, type LanguageMenuHandle } from './language-menu';
 
 const railItems = [
   ['Casino', 'casino.dea5f87e.png'], ['Sports', 'football.2efdf0b1.png'],
-  ['Promotions', 'promotions.2684d026.png'], ['Slots', 'slots.b6762e18.png'],
+  ['Slots', 'slots.b6762e18.png'],
   ['Live Casino', 'live-casino.b9d52e4b.png'], ['Crash & Instant', 'dice.bdc6efaf.png'],
   ['Table & Cards', 'blackjack.5ed1c9b4.png'], ['Lotto & Scratch', 'scratch-cards.d8bb04ad.png'],
   ['English', 'language.58fb5410.png'],
 ];
 const drawerItems = [
   ['Crash & Instant', 'dice.bdc6efaf.png'], ['Table & Cards', 'blackjack.5ed1c9b4.png'],
-  ['Lotto & Scratch', 'scratch-cards.d8bb04ad.png'], ['Promotions', 'promotions.2684d026.png'],
+  ['Lotto & Scratch', 'scratch-cards.d8bb04ad.png'],
   ['Loyalty Tiers', 'vip.cee8642b.png'],
 ];
 
@@ -35,7 +35,6 @@ function MenuContents({ active, onChoose, mobile = false, available, languageMen
   return <div className="navigation-content">
     <div className="navigation-tabs">{railItems.slice(0, 2).map(([name, image]) => <button key={name} className={active === name || (active === 'Home' && name === 'Casino') ? 'selected' : ''} onClick={() => onChoose(name)}><img src={asset(image)} alt=""/>{t(name)}</button>)}</div>
     {mobile && language}
-    <div className="cashback-card"><strong>{t('DAILY CASHBACK')}</strong><span>{t("Coming soon")}</span><button className="primary" onClick={() => onChoose('Promotions')}>{t('See Details')} →</button></div>
     <div className="navigation-featured">{[['Live Casino', 'live-casino-element.d7c46a6f.webp'], ['Slots', 'slots-machine.d48b1a72.webp']].map(([name, image]) => <button className="drawer-feature" key={name} onClick={() => onChoose(name)}><span>{t(name)}</span><img src={asset(image)} alt=""/></button>)}</div>
     <div className="navigation-links">{drawerItems.map(([name, image]) => <button className={`drawer-item ${active === name ? 'current' : ''}`} key={name} onClick={() => onChoose(name)}><img src={asset(image)} alt=""/><span>{t(name)}</span></button>)}</div>
     {!mobile && language}

@@ -87,9 +87,8 @@ export function SiteFooter({
             <FooterGroup title={t("Casino")} links={casinoLinks} />
             <FooterGroup
               className={styles.mobileGroup}
-              title={t("Promotions")}
+              title={t("Loyalty Tiers")}
               links={[
-                ["Promotions", "/promotions"],
                 ["Loyalty Tiers", "/loyalty-tiers"],
                 ["Referral Program", "/refer-a-friend"],
               ]}
@@ -118,9 +117,8 @@ export function SiteFooter({
           </div>
           <FooterGroup
             className={styles.desktopGroup}
-            title={t("Promotions")}
+            title={t("Loyalty Tiers")}
             links={[
-              ["Promotions", "/promotions"],
               ["Loyalty Tiers", "/loyalty-tiers"],
               ["Referral Program", "/refer-a-friend"],
             ]}

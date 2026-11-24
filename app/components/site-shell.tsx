@@ -50,9 +50,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   const active =
     pathname === "/" || pathname === "/casino"
       ? "Casino"
-      : pathname.startsWith("/promotions")
-        ? "Promotions"
-        : (pageDefinitions[pathname.slice(1)]?.title ?? "Casino");
+      : (pageDefinitions[pathname.slice(1)]?.title ?? "Casino");
   const consent = (value: string) => {
     localStorage.setItem("choicestakes-cookie-preferences", value);
     setCookies(false);

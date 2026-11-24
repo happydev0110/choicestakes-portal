@@ -81,7 +81,6 @@ availability still depends on API-MATIC.
 | Lobby & catalogs   | `/`, `/casino`, `/new-games`, `/slots`, `/live`, `/crash-instant`, `/table-cards`, `/lotto-scratch`, `/roulette`, `/poker`, `/search`                                                                                                      |
 | Providers & games  | `/provider-games`, `/play/{uuid}`, `/providers`, `/providers/{provider}`, `/games/{uuid}` |
 | Sports             | `/sports` (Betby); `/sportsbook` redirects to `/sports` |
-| Promotions         | `/promotions`, `/promotions/first-deposit`, `/promotions/second-deposit`, `/promotions/third-deposit`                                                                                                                                      |
 | Rewards & partners | `/loyalty-tiers`, `/affiliates`, `/refer-a-friend`                                                                                                                                                                                         |
 | Crypto             | `/buy-crypto`                                                                                                                                                                                                                              |
 | Help               | `/contact`, `/complaints`, `/faq`                                                                                                                                                                                                          |
